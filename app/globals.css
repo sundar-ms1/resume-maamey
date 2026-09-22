@@ -1,0 +1,283 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-ui: 'Figtree', ui-sans-serif, system-ui, sans-serif;
+}
+
+* { -webkit-font-smoothing: antialiased; }
+
+html, body { height: 100%; }
+body {
+  background: #f4f4f7;
+  color: #12121a;
+  font-family: var(--font-ui);
+}
+
+/* ---------- editor chrome ---------- */
+
+.rm-preview-shell {
+  padding: 24px;
+  width: 100%;
+}
+
+.rm-page-shadow > .rm-page {
+  box-shadow: 0 1px 2px rgba(18, 18, 26, 0.07), 0 18px 46px -14px rgba(18, 18, 26, 0.28);
+  border-radius: 2px;
+}
+
+.rm-break {
+  border-top: 1px dashed #9aa0b4;
+  pointer-events: none;
+}
+.rm-break span {
+  position: absolute;
+  right: 100%;
+  margin-right: 12px;
+  top: -9px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6b7280;
+  background: #e9e9f0;
+  padding: 2px 7px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+@media (max-width: 1023px) {
+  .rm-break span { display: none; }
+}
+
+.field-label {
+  @apply block text-[11px] font-semibold uppercase tracking-[0.07em] text-ink-500 mb-1;
+}
+.field {
+  @apply w-full rounded-lg border border-line bg-white px-3 py-2 text-[13px] text-ink outline-none transition;
+}
+.field:focus {
+  @apply border-brand ring-2 ring-brand/15;
+}
+textarea.field { @apply leading-relaxed; }
+
+.btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg px-3.5 py-2 text-[13px] font-semibold transition select-none;
+}
+.btn-primary { @apply bg-brand text-white hover:bg-brand-dark; }
+.btn-ghost { @apply border border-line bg-white text-ink-700 hover:border-ink-300 hover:bg-canvas; }
+.btn-quiet { @apply text-ink-500 hover:text-ink hover:bg-canvas; }
+.btn:disabled { @apply opacity-40 pointer-events-none; }
+
+.tab {
+  @apply flex flex-col items-center gap-1 rounded-lg px-2 py-2.5 text-[10.5px] font-semibold text-ink-500 transition;
+}
+.tab[data-active='true'] { @apply bg-brand-light text-brand-dark; }
+.tab:hover { @apply bg-canvas text-ink; }
+
+.card { @apply rounded-xl2 border border-line bg-white; }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: #d6d6e0; border-radius: 10px; border: 2px solid transparent; background-clip: content-box; }
+::-webkit-scrollbar-thumb:hover { background: #bcbcca; background-clip: content-box; }
+
+/* ---------- printing ---------- */
+
+.rm-print-only { display: none; }
+
+.rm-page, .rm-page * {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.rm-item { break-inside: avoid; page-break-inside: avoid; }
+.rm-section { break-inside: auto; }
+
+@page {
+  size: A4;
+  margin: 0;
+}
+
+@media print {
+  html, body {
+    background: #fff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: auto !important;
+  }
+  body > *:not(.rm-print-only) { display: none !important; }
+  .rm-print-only { display: block !important; }
+  .rm-print-only .rm-page {
+    width: 210mm !important;
+    /* a hair under A4 so a rounded pixel never spills onto a blank extra page */
+    min-height: 296mm !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    transform: none !important;
+  }
+  .rm-break { display: none !important; }
+}
+
+@media print {
+  /* trailing space must never push a blank page */
+  .rm-print-only .rm-section:last-child { margin-bottom: 0 !important; }
+  .rm-print-only main, .rm-print-only aside { padding-bottom: 14px !important; }
+}
+/* =========================================================
+   RESUME PDF EXPORT
+   ========================================================= */
+
+.resume-pdf-root {
+  position: fixed;
+  left: -100000px;
+  top: 0;
+
+  width: 794px;
+  min-width: 794px;
+  max-width: 794px;
+
+  margin: 0;
+  padding: 0;
+
+  background: #ffffff;
+
+  opacity: 1;
+  pointer-events: none;
+
+  z-index: -999999;
+
+  transform: none !important;
+  zoom: 1 !important;
+}
+
+.resume-pdf-page {
+  width: 794px;
+  min-height: 1123px;
+  max-width: 794px;
+
+  margin: 0;
+  padding: 0;
+
+  background: #ffffff;
+
+  transform: none !important;
+  zoom: 1 !important;
+
+  box-shadow: none !important;
+
+  overflow: visible;
+}
+
+/* Don't allow the editor's preview scaling to affect PDF */
+
+.resume-pdf-root * {
+  transform-origin: top left;
+}
+
+/* PDF images */
+
+.resume-pdf-root img {
+  max-width: 100%;
+}
+
+/* PDF SVGs */
+
+.resume-pdf-root svg {
+  max-width: 100%;
+}
+
+/* Don't show editor-only controls inside the PDF */
+
+.resume-pdf-root .no-pdf,
+.resume-pdf-root .pdf-hidden,
+.resume-pdf-root button {
+  display: none !important;
+}
+
+/* Keep resume blocks together where possible */
+
+.resume-pdf-root section,
+.resume-pdf-root article {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+/* Links should remain readable */
+
+.resume-pdf-root a {
+  text-decoration: none;
+}
+
+/* Prevent selection/caret artifacts */
+
+.resume-pdf-root [contenteditable="true"] {
+  outline: none !important;
+  caret-color: transparent !important;
+}
+
+/* =========================================================
+   PRINT
+   ========================================================= */
+
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  html,
+  body {
+    width: 210mm;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+  }
+
+  body > * {
+    display: none !important;
+  }
+
+  body > .resume-pdf-root {
+    display: block !important;
+
+    position: static !important;
+
+    width: 210mm !important;
+    min-width: 210mm !important;
+    max-width: 210mm !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    opacity: 1 !important;
+
+    transform: none !important;
+    zoom: 1 !important;
+
+    background: #ffffff !important;
+  }
+
+  .resume-pdf-page {
+    width: 210mm !important;
+    min-height: 297mm !important;
+    max-width: 210mm !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    transform: none !important;
+    zoom: 1 !important;
+
+    box-shadow: none !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
