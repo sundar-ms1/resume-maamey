@@ -9,8 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+<<<<<<< HEAD
     "html2canvas": "^1.4.1",
     "jspdf": "^4.2.1",
+=======
+>>>>>>> 9267834a666c39c4f88681c9e761ad88feeed0e0
     "next": "14.2.15",
     "react": "18.3.1",
     "react-dom": "18.3.1"
