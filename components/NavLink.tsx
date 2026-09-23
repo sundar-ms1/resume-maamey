@@ -11,9 +11,11 @@ export type RouteKey = 'home' | 'templates' | 'editor';
 
 const STATIC = process.env.NEXT_PUBLIC_STATIC === '1';
 
-const MAP: Record<RouteKey, string> = STATIC
-  ? { home: './index.html', templates: './templates.html', editor: './editor.html' }
-  : { home: '/', templates: '/templates', editor: '/editor' };
+const MAP: Record<RouteKey, string> = {
+  home: '/',
+  templates: '/templates',
+  editor: '/editor',
+};
 
 export function href(to: RouteKey, opts?: { query?: string; hash?: string }) {
   return `${MAP[to]}${opts?.query ? `?${opts.query}` : ''}${opts?.hash ? `#${opts.hash}` : ''}`;
