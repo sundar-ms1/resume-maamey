@@ -1,59 +1,137 @@
-import type { Metadata } from 'next';
-import Link from 'next/link';
+import Link from "next/link";
 
-export const metadata: Metadata = {
-  title: 'Privacy Policy — Resume Maamey',
-  description: 'Privacy policy for Resume Maamey. Learn how your data is handled.',
-};
-
-export default function PrivacyPage() {
+export default function HomePage() {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-16 text-slate-800 dark:text-slate-200">
-      <Link href="/" className="text-blue-600 dark:text-blue-400 hover:underline mb-8 inline-block">
-        &larr; Back to Resume Maamey
-      </Link>
-      <h1 className="text-3xl font-bold mb-6 text-slate-900 dark:text-white">Privacy Policy</h1>
-      <p className="text-sm text-slate-500 mb-8">Last updated: 2026</p>
-
-      <section className="space-y-6 leading-relaxed">
-        <div>
-          <h2 className="text-xl font-semibold mb-2 text-slate-900 dark:text-white">1. Overview</h2>
-          <p>
-            Welcome to Resume Maamey (resumemaamey.in). We respect your privacy and are committed to protecting any information you provide while using our online resume builder.
-          </p>
+    <div className="flex min-h-screen flex-col bg-white">
+      {/* Navigation */}
+      <header className="sticky top-0 z-50 border-b border-line bg-white/95 backdrop-blur">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
+          <Link href="/" className="flex items-center gap-3">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-ink text-sm font-bold text-white">
+              RM
+            </div>
+            <div>
+              <div className="text-sm font-bold text-ink">Resume Maamey</div>
+              <div className="text-[11px] text-ink-500">Free ATS Resume Maker</div>
+            </div>
+          </Link>
+          <div className="flex items-center gap-4">
+            <Link href="/templates" className="text-sm font-medium text-ink-500 hover:text-ink">
+              Templates
+            </Link>
+            <Link href="/editor" className="btn btn-primary">
+              Build My Resume
+            </Link>
+          </div>
         </div>
+      </header>
 
-        <div>
-          <h2 className="text-xl font-semibold mb-2 text-slate-900 dark:text-white">2. Resume Data & Storage</h2>
-          <p>
-            Your resume content is stored locally within your browser using modern client-side storage technologies (such as localStorage). We do not store, view, or sell your personal career data, resume drafts, or uploaded details on external database servers without your explicit consent.
-          </p>
-        </div>
+      <main className="flex-1">
+        {/* Hero Section */}
+        <section className="px-4 py-20 text-center sm:px-6 lg:py-28">
+          <div className="mx-auto max-w-4xl">
+            <span className="rounded-full bg-brand-light px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-brand-dark">
+              100% Free · No Sign-up Required
+            </span>
+            <h1 className="mt-6 text-4xl font-black tracking-tight text-ink sm:text-6xl">
+              Create an ATS-Friendly Resume <br className="hidden sm:inline" />
+              That Lands Job Interviews.
+            </h1>
+            <p className="mx-auto mt-6 max-w-2xl text-lg text-ink-500">
+              Clean layout, professional ATS-tested templates, live side-by-side editing, 
+              and one-click high-resolution PDF download.
+            </p>
+            <div className="mt-10 flex flex-wrap justify-center gap-4">
+              <Link href="/editor" className="btn btn-primary px-8 py-3.5 text-base">
+                Create My Resume Now →
+              </Link>
+              <Link href="/templates" className="btn btn-ghost border border-line px-8 py-3.5 text-base">
+                View Templates
+              </Link>
+            </div>
+          </div>
+        </section>
 
-        <div>
-          <h2 className="text-xl font-semibold mb-2 text-slate-900 dark:text-white">3. Google AdSense & Cookies</h2>
-          <p>
-            We use Google AdSense to serve advertisements when you visit our website. Google and its partner advertising networks may use cookies and web beacons (such as the DoubleClick cookie) to serve ads based on your prior visits to our website or other sites on the Internet.
-          </p>
-          <p className="mt-2">
-            You may opt out of personalized advertising by visiting Google's Ads Settings (<a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 underline">google.com/settings/ads</a>) or via <a href="https://aboutads.info" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 underline">aboutads.info</a>.
-          </p>
-        </div>
+        {/* Feature Grid */}
+        <section className="border-t border-line bg-canvas px-4 py-16 sm:px-6">
+          <div className="mx-auto max-w-7xl">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+              <div className="rounded-2xl border border-line bg-white p-6 shadow-sm">
+                <div className="mb-4 text-2xl font-bold text-brand">01</div>
+                <h3 className="text-lg font-bold text-ink">ATS-Optimized Formatting</h3>
+                <p className="mt-2 text-sm text-ink-500">
+                  Engineered strictly around standard parsing structures so applicant tracking systems never drop your qualifications.
+                </p>
+              </div>
 
-        <div>
-          <h2 className="text-xl font-semibold mb-2 text-slate-900 dark:text-white">4. Google Analytics</h2>
-          <p>
-            We use Google Analytics to monitor aggregated, anonymized web traffic and user behavior trends. This service collects standard internet log information such as device type, browser version, and approximate location to help us improve website functionality.
-          </p>
-        </div>
+              <div className="rounded-2xl border border-line bg-white p-6 shadow-sm">
+                <div className="mb-4 text-2xl font-bold text-brand">02</div>
+                <h3 className="text-lg font-bold text-ink">Live Visual Feedback</h3>
+                <p className="mt-2 text-sm text-ink-500">
+                  See real-time changes reflected directly on an A4 preview with auto page-count warnings and automatic zoom scaling.
+                </p>
+              </div>
 
-        <div>
-          <h2 className="text-xl font-semibold mb-2 text-slate-900 dark:text-white">5. Contact Us</h2>
-          <p>
-            If you have any questions or feedback regarding this Privacy Policy, please contact us at <span className="font-mono text-blue-600 dark:text-blue-400">contact@resumemaamey.in</span>.
+              <div className="rounded-2xl border border-line bg-white p-6 shadow-sm">
+                <div className="mb-4 text-2xl font-bold text-brand">03</div>
+                <h3 className="text-lg font-bold text-ink">Private & Fast PDF Output</h3>
+                <p className="mt-2 text-sm text-ink-500">
+                  Your details never leave your browser. Resumes compile client-side into clean, vector-rendered PDFs.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="border-t border-line px-4 py-16 sm:px-6">
+          <div className="mx-auto max-w-3xl">
+            <h2 className="text-center text-3xl font-extrabold text-ink">
+              Frequently Asked Questions
+            </h2>
+            <div className="mt-8 space-y-4">
+              <div className="rounded-xl border border-line p-5">
+                <h3 className="font-bold text-ink">Is Resume Maamey completely free?</h3>
+                <p className="mt-2 text-sm text-ink-500">
+                  Yes. You can build, edit, and export your resume as a clean PDF without paying or creating an account.
+                </p>
+              </div>
+              <div className="rounded-xl border border-line p-5">
+                <h3 className="font-bold text-ink">Are these templates readable by ATS?</h3>
+                <p className="mt-2 text-sm text-ink-500">
+                  Yes, every template is structured using semantic headings and clean text hierarchy designed to pass recruiter scanners.
+                </p>
+              </div>
+              <div className="rounded-xl border border-line p-5">
+                <h3 className="font-bold text-ink">Is my data secure?</h3>
+                <p className="mt-2 text-sm text-ink-500">
+                  All your data stays local in your browser session. We do not store or sell personal resumes.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      {/* Footer */}
+      <footer className="border-t border-line bg-white py-8">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 sm:flex-row sm:px-6">
+          <p className="text-xs text-ink-500">
+            © {new Date().getFullYear()} Resume Maamey. All rights reserved.
           </p>
+          <div className="flex gap-6 text-xs text-ink-500">
+            <Link href="/privacy" className="hover:text-ink">
+              Privacy Policy
+            </Link>
+            <Link href="/terms" className="hover:text-ink">
+              Terms of Service
+            </Link>
+            <Link href="/sitemap.xml" className="hover:text-ink">
+              Sitemap
+            </Link>
+          </div>
         </div>
-      </section>
+      </footer>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { NavLink } from '@/components/NavLink';
 import { Wordmark } from './Brand';
 
@@ -40,6 +41,8 @@ export function SiteFooter() {
           <NavLink to="templates" className="hover:text-ink">Templates</NavLink>
           <NavLink to="editor" className="hover:text-ink">Editor</NavLink>
           <NavLink to="home" hash="faq" className="hover:text-ink">FAQ</NavLink>
+          <Link href="/privacy" className="hover:text-ink">Privacy Policy</Link>
+          <Link href="/terms" className="hover:text-ink">Terms</Link>
           <span>No login · No watermark</span>
         </div>
       </div>
