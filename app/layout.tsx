@@ -1,10 +1,7 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import Script from 'next/script';
 // @ts-ignore
 import './globals.css';
-
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Resume Maamey — Free Resume Builder & CV Maker',
@@ -16,14 +13,6 @@ export const metadata: Metadata = {
     description: 'Create a professional resume in 10 minutes. 100% free.',
     url: 'https://resumemaamey.in',
     siteName: 'Resume Maamey',
-    images: [
-      {
-        url: '/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'Resume Maamey Builder Preview',
-      },
-    ],
     locale: 'en_US',
     type: 'website',
   },
@@ -31,7 +20,6 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Resume Maamey — Free Resume Builder',
     description: 'Create a professional resume in 10 minutes. 100% free.',
-    images: ['/og-image.png'],
   },
 };
 
@@ -42,18 +30,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <head>
+      <body className="min-h-screen bg-white text-slate-900 font-sans antialiased dark:bg-slate-950 dark:text-slate-50">
         {/* Google AdSense Script */}
-        {/* Replace ca-pub-XXXXXXXXXXXXXXXX with your actual publisher ID from Google AdSense */}
         <Script
           id="google-adsense"
           async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6119006421731405"
           crossOrigin="anonymous"
           strategy="afterInteractive"
         />
-      </head>
-      <body className={`${inter.className} min-h-screen bg-white text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-50`}>
         {children}
       </body>
     </html>
