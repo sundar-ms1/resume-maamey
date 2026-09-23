@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ResumeProvider } from "@/lib/store";
 
 export const metadata: Metadata = {
   title: "Resume Editor & Builder",
@@ -14,5 +15,5 @@ export default function EditorLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return <ResumeProvider>{children}</ResumeProvider>;
 }
