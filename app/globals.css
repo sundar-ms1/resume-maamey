@@ -281,3 +281,31 @@ textarea.field { @apply leading-relaxed; }
     print-color-adjust: exact !important;
   }
 }
+@media print {
+  /* Hide headers, sidebars, buttons, editor controls, and footers */
+  body * {
+    visibility: hidden !important;
+  }
+
+  /* Only display the resume paper element */
+  #resume-pdf-root,
+  #resume-pdf-root * {
+    visibility: visible !important;
+  }
+
+  #resume-pdf-root {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+}

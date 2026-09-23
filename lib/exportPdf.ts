@@ -20,7 +20,6 @@ function waitForImages(element: HTMLElement): Promise<void> {
             resolve();
             return;
           }
-
           img.onload = () => resolve();
           img.onerror = () => resolve();
         })
@@ -102,6 +101,9 @@ function prepareClone(
     *::before,
     *::after {
       box-sizing: border-box !important;
+      -webkit-font-smoothing: antialiased !important;
+      -moz-osx-font-smoothing: grayscale !important;
+      text-rendering: optimizeLegibility !important;
     }
 
     html,
@@ -172,7 +174,6 @@ export async function downloadResumePdf(
   fileName = "resume"
 ): Promise<void> {
   const original = getResumeElement();
-
   const { wrapper, cleanup } = prepareClone(original);
 
   try {
@@ -188,8 +189,11 @@ export async function downloadResumePdf(
     await waitForImages(clone);
     await nextFrame();
 
+    // Scale 4 creates 300+ DPI ultra-sharp rendering
+    const scale = 4;
+
     const canvas = await html2canvas(clone, {
-      scale: 4,
+      scale: scale,
       useCORS: true,
       allowTaint: false,
       backgroundColor: "#ffffff",
@@ -208,9 +212,9 @@ export async function downloadResumePdf(
       unit: "mm",
       format: "a4",
       compress: true,
-      putOnlyUsedFonts: true,
     });
 
+    // Compute pixel height per A4 page under the 4x scale
     const pageHeightPx = Math.round(
       (canvas.width * A4_HEIGHT_MM) / A4_WIDTH_MM
     );
@@ -223,23 +227,19 @@ export async function downloadResumePdf(
       const currentPageHeight = Math.min(pageHeightPx, remainingHeight);
 
       const pageCanvas = document.createElement("canvas");
-
       pageCanvas.width = canvas.width;
       pageCanvas.height = currentPageHeight;
 
       const context = pageCanvas.getContext("2d");
-
       if (!context) {
         throw new Error("Unable to create PDF canvas.");
       }
 
+      context.imageSmoothingEnabled = true;
+      context.imageSmoothingQuality = "high";
+
       context.fillStyle = "#ffffff";
-      context.fillRect(
-        0,
-        0,
-        pageCanvas.width,
-        pageCanvas.height
-      );
+      context.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
 
       context.drawImage(
         canvas,
@@ -253,11 +253,8 @@ export async function downloadResumePdf(
         currentPageHeight
       );
 
-      const imageData = pageCanvas.toDataURL(
-        "image/jpeg",
-        0.98
-      );
-
+      // PNG format ensures no compression artifacts or blurry text edges
+      const imageData = pageCanvas.toDataURL("image/png");
       const renderedHeightMm =
         (currentPageHeight / canvas.width) * A4_WIDTH_MM;
 
@@ -267,13 +264,13 @@ export async function downloadResumePdf(
 
       pdf.addImage(
         imageData,
-        "JPEG",
+        "PNG",
         0,
         0,
         A4_WIDTH_MM,
         renderedHeightMm,
         undefined,
-        "FAST"
+        "SLOW"
       );
 
       sourceY += currentPageHeight;
@@ -282,6 +279,7 @@ export async function downloadResumePdf(
 
     const finalName = `${safeFileName(fileName)}.pdf`;
 
+    // Direct download trigger (no print popup)
     pdf.save(finalName);
   } finally {
     cleanup();
