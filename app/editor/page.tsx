@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useResume } from "@/lib/store";
 import { downloadResumePdf } from "@/lib/exportPdf";
+import { trackPdfDownload } from "@/lib/analytics";
 
 import { A4Preview } from "@/components/resume/A4Preview";
 import { ContentPanel } from "@/components/editor/ContentPanel";
@@ -49,6 +50,9 @@ export default function EditorPage() {
     try {
       setIsDownloading(true);
 
+      // Track conversion event in Google Analytics
+      trackPdfDownload("Resume Maamey Template");
+
       // Allow the latest editor change to render before capturing.
       await new Promise<void>((resolve) => {
         requestAnimationFrame(() => {
@@ -70,6 +74,8 @@ export default function EditorPage() {
   };
 
   const handlePrint = () => {
+    // Track print action as conversion
+    trackPdfDownload("Print to PDF");
     window.print();
   };
 
