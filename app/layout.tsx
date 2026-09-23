@@ -35,9 +35,38 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'Resume Maamey',
+    url: 'https://resumemaamey.in',
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'All',
+    browserRequirements: 'Requires JavaScript. Requires HTML5.',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'INR',
+    },
+    description:
+      'Free online ATS resume builder and CV maker with instant PDF download. No login or watermark required.',
+    featureList: [
+      'ATS-Friendly Resume Templates',
+      'Instant Client-Side PDF Generation',
+      'No Account or Sign-up Required',
+      'Privacy-focused Local Storage',
+    ],
+  };
+
   return (
     <html lang="en" className="scroll-smooth">
       <head>
+        {/* Structured Data (JSON-LD) for SEO Rich Snippets */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+
         {/* Google AdSense */}
         <script
           async
