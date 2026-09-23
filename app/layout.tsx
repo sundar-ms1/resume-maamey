@@ -21,6 +21,9 @@ export const metadata: Metadata = {
     title: 'Resume Maamey — Free Resume Builder',
     description: 'Create a professional resume in 10 minutes. 100% free.',
   },
+  verification: {
+    google: 'khJZj_QltCDOGnCk9OxXFy9M5TCFwYwpnbSl6WtPUGQ',
+  },
 };
 
 export default function RootLayout({
