@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Script from 'next/script';
 // @ts-ignore
 import './globals.css';
 import { ResumeProvider } from '@/lib/store';
@@ -31,15 +30,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className="min-h-screen bg-white text-slate-900 font-sans antialiased dark:bg-slate-950 dark:text-slate-50">
-        {/* Google AdSense Script */}
-        <Script
-          id="google-adsense"
+      <head>
+        {/* Google AdSense direct tag */}
+        <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6119006421731405"
           crossOrigin="anonymous"
-          strategy="afterInteractive"
         />
+      </head>
+      <body className="min-h-screen bg-white text-slate-900 font-sans antialiased dark:bg-slate-950 dark:text-slate-50">
         <ResumeProvider>
           {children}
         </ResumeProvider>
