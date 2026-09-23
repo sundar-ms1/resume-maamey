@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   description:
     'Build modern, ATS-friendly resumes in minutes. Completely free with instant PDF export, no sign-up required.',
   metadataBase: new URL('https://resumemaamey.in'),
+  alternates: {
+    canonical: 'https://resumemaamey.in',
+  },
   openGraph: {
     title: 'Resume Maamey — Free Resume Builder',
     description: 'Create a professional resume in 10 minutes. 100% free.',
