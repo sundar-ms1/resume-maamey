@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Script from 'next/script';
 // @ts-ignore
 import './globals.css';
+import { ResumeProvider } from '@/lib/store';
 
 export const metadata: Metadata = {
   title: 'Resume Maamey — Free Resume Builder & CV Maker',
@@ -39,7 +40,9 @@ export default function RootLayout({
           crossOrigin="anonymous"
           strategy="afterInteractive"
         />
-        {children}
+        <ResumeProvider>
+          {children}
+        </ResumeProvider>
       </body>
     </html>
   );
