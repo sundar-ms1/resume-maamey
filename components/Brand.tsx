@@ -13,7 +13,6 @@ export function Brand({
   size = "lg",
   showSubtitle = true,
 }: BrandProps) {
-  // Dimensions tuned for clarity across desktop and mobile
   const iconDimensions = {
     sm: "h-9 w-9 sm:h-10 sm:w-10",
     md: "h-11 w-11 sm:h-12 sm:w-12",
@@ -21,14 +20,14 @@ export function Brand({
   }[size];
 
   const textSizes = {
-    sm: "text-sm",
-    md: "text-base sm:text-lg",
-    lg: "text-lg sm:text-xl",
+    sm: "text-base",
+    md: "text-lg sm:text-xl",
+    lg: "text-xl sm:text-2xl",
   }[size];
 
   return (
     <Link href={href} className="flex items-center gap-3.5 transition hover:opacity-95">
-      {/* Enlarged Logo Container */}
+      {/* Logo container */}
       <div
         className={`relative ${iconDimensions} flex shrink-0 items-center justify-center overflow-hidden rounded-xl bg-canvas`}
       >
@@ -42,13 +41,19 @@ export function Brand({
         />
       </div>
 
-      {/* Brand Text */}
-      <div className="flex flex-col">
-        <span className={`font-black tracking-tight text-ink ${textSizes}`}>
-          Resume Maamey
+      {/* Brand Text styled exactly like the logo */}
+      <div className="flex flex-col justify-center">
+        <span className={`font-black tracking-tight leading-tight ${textSizes}`}>
+          {/* Deep Navy/Black tone matching "Resume" */}
+          <span className="text-[#0a1733]">Resume </span>
+          {/* Blue to Purple/Violet gradient matching "Maamey" */}
+          <span className="bg-gradient-to-r from-[#0062ff] via-[#6342f5] to-[#8f2bf5] bg-clip-text text-transparent">
+            Maamey
+          </span>
         </span>
+
         {showSubtitle && (
-          <span className="text-[11px] font-medium text-ink-500">
+          <span className="text-[11px] font-semibold tracking-wider text-ink-500 uppercase">
             Free ATS Resume Maker
           </span>
         )}
