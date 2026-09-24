@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { useResume } from "@/lib/store";
 import { downloadResumePdf } from "@/lib/exportPdf";
 import { trackPdfDownload } from "@/lib/analytics";
 
+import { Brand } from "@/components/Brand";
 import { A4Preview } from "@/components/resume/A4Preview";
 import { ContentPanel } from "@/components/editor/ContentPanel";
 import { DesignPanel } from "@/components/editor/DesignPanel";
@@ -96,26 +96,10 @@ export default function EditorPage() {
       {/* Hidden high-resolution PDF source */}
       <PrintRoot />
 
-      {/* Top navigation */}
+      {/* Top navigation with larger logo branding */}
       <header className="no-print sticky top-0 z-50 border-b border-line bg-white">
-        <div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-4 sm:px-6">
-          <Link
-            href="/"
-            className="flex items-center gap-3"
-          >
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-ink text-sm font-bold text-white">
-              RM
-            </div>
-
-            <div className="hidden sm:block">
-              <div className="text-sm font-bold text-ink">
-                Resume Maamey
-              </div>
-              <div className="text-[11px] text-ink-500">
-                Resume Builder
-              </div>
-            </div>
-          </Link>
+        <div className="mx-auto flex h-20 max-w-[1600px] items-center justify-between px-4 sm:px-6">
+          <Brand size="md" />
 
           <div className="flex items-center gap-2">
             <button
@@ -174,10 +158,10 @@ export default function EditorPage() {
       {/* Main editor */}
       <div className="no-print">
         <div className="mx-auto max-w-[1600px]">
-          <div className="grid min-h-[calc(100vh-4rem)] grid-cols-1 lg:grid-cols-[minmax(340px,1fr)_minmax(500px,794px)]">
+          <div className="grid min-h-[calc(100vh-5rem)] grid-cols-1 lg:grid-cols-[minmax(340px,1fr)_minmax(500px,794px)]">
             {/* LEFT EDITOR */}
             <aside className="border-r border-line bg-white">
-              <div className="sticky top-16 max-h-[calc(100vh-4rem)] overflow-y-auto">
+              <div className="sticky top-20 max-h-[calc(100vh-5rem)] overflow-y-auto">
                 <div className="border-b border-line px-4 py-4 sm:px-6">
                   <div className="flex items-center justify-between gap-3">
                     <div>
@@ -232,7 +216,7 @@ export default function EditorPage() {
 
             {/* RIGHT PREVIEW */}
             <section className="min-w-0 bg-canvas">
-              <div className="sticky top-16 z-20 border-b border-line bg-white/95 backdrop-blur">
+              <div className="sticky top-20 z-20 border-b border-line bg-white/95 backdrop-blur">
                 <div className="flex items-center justify-between gap-3 px-4 py-3 sm:px-6">
                   <div>
                     <div className="text-sm font-bold text-ink">
@@ -285,7 +269,7 @@ export default function EditorPage() {
                 </div>
               </div>
 
-              <div className="min-h-[calc(100vh-7rem)] overflow-auto px-3 py-6 sm:px-6 sm:py-8">
+              <div className="min-h-[calc(100vh-8rem)] overflow-auto px-3 py-6 sm:px-6 sm:py-8">
                 <A4Preview
                   data={data}
                   zoom={zoom}
