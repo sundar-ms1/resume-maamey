@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -26,10 +28,13 @@ export function Brand({
   }[size];
 
   return (
-    <Link href={href} className="flex items-center gap-3.5 transition hover:opacity-95">
-      {/* Logo container */}
+    <Link
+      href={href}
+      className="flex items-center gap-3.5 transition hover:opacity-95"
+    >
+      {/* Logo Icon Container */}
       <div
-        className={`relative ${iconDimensions} flex shrink-0 items-center justify-center overflow-hidden rounded-xl bg-canvas`}
+        className={`relative ${iconDimensions} flex shrink-0 items-center justify-center overflow-hidden rounded-xl bg-slate-100`}
       >
         <Image
           src="/logo.png"
@@ -41,19 +46,25 @@ export function Brand({
         />
       </div>
 
-      {/* Brand Text styled exactly like the logo */}
+      {/* Brand Title with Gradient Styling */}
       <div className="flex flex-col justify-center">
-        <span className={`font-black tracking-tight leading-tight ${textSizes}`}>
-          {/* Deep Navy/Black tone matching "Resume" */}
-          <span className="text-[#0a1733]">Resume </span>
-          {/* Blue to Purple/Violet gradient matching "Maamey" */}
-          <span className="bg-gradient-to-r from-[#0062ff] via-[#6342f5] to-[#8f2bf5] bg-clip-text text-transparent">
+        <div className={`font-black tracking-tight leading-tight ${textSizes}`}>
+          <span style={{ color: "#0a1733" }}>Resume </span>
+          <span
+            style={{
+              background:
+                "linear-gradient(90deg, #0062ff 0%, #6342f5 55%, #8f2bf5 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              display: "inline-block",
+            }}
+          >
             Maamey
           </span>
-        </span>
+        </div>
 
         {showSubtitle && (
-          <span className="text-[11px] font-semibold tracking-wider text-ink-500 uppercase">
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">
             Free ATS Resume Maker
           </span>
         )}
