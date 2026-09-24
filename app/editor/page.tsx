@@ -1,309 +1,194 @@
-"use client";
+import Link from "next/link";
+import Image from "next/image";
 
-import { useEffect, useState } from "react";
-import { useResume } from "@/lib/store";
-import { downloadResumePdf } from "@/lib/exportPdf";
-import { trackPdfDownload } from "@/lib/analytics";
-
-import { Brand } from "@/components/Brand";
-import { A4Preview } from "@/components/resume/A4Preview";
-import { ContentPanel } from "@/components/editor/ContentPanel";
-import { DesignPanel } from "@/components/editor/DesignPanel";
-import { SectionsPanel } from "@/components/editor/SectionsPanel";
-import { TemplatePanel } from "@/components/editor/TemplatePanel";
-import PrintRoot from "@/components/PrintRoot";
-
-type Panel = "content" | "design" | "sections" | "templates";
-
-const PANELS: Array<{
-  id: Panel;
-  label: string;
-}> = [
-  { id: "content", label: "Content" },
-  { id: "design", label: "Design" },
-  { id: "sections", label: "Sections" },
-  { id: "templates", label: "Templates" },
-];
-
-export default function EditorPage() {
-  const [mounted, setMounted] = useState(false);
-  const [activePanel, setActivePanel] = useState<Panel>("content");
-  const [zoom, setZoom] = useState<number | "fit">("fit");
-  const [pageCount, setPageCount] = useState(1);
-  const [isDownloading, setIsDownloading] = useState(false);
-
-  const {
-    data,
-    undo,
-    redo,
-    canUndo,
-    canRedo,
-  } = useResume();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const handleDownloadPdf = async () => {
-    if (isDownloading) return;
-
-    try {
-      setIsDownloading(true);
-
-      // Track conversion event in Google Analytics
-      trackPdfDownload("Resume Maamey Template");
-
-      // Allow the latest editor change to render before capturing.
-      await new Promise<void>((resolve) => {
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => resolve());
-        });
-      });
-
-      await downloadResumePdf(
-        `${data.basics.name || "Resume"}-Resume-Maamey`
-      );
-    } catch (error) {
-      console.error("PDF export failed:", error);
-      window.alert(
-        "Unable to generate the PDF. Please try again."
-      );
-    } finally {
-      setIsDownloading(false);
-    }
-  };
-
-  const handlePrint = () => {
-    // Track print action as conversion
-    trackPdfDownload("Print to PDF");
-    window.print();
-  };
-
-  if (!mounted) {
-    return (
-      <main className="min-h-screen bg-canvas">
-        <div className="flex min-h-screen items-center justify-center">
-          <div className="text-sm text-ink-500">
-            Loading editor...
-          </div>
-        </div>
-      </main>
-    );
-  }
-
+export default function HomePage() {
   return (
-    <main className="min-h-screen bg-canvas">
-      {/* Hidden high-resolution PDF source */}
-      <PrintRoot />
+    <div className="min-h-screen bg-[#f8fafc] text-[#0f172a]">
+      {/* Navigation Header */}
+      <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur">
+        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6">
+          {/* Brand Logo & Name */}
+          <Link
+            href="/"
+            className="flex items-center gap-3.5 transition hover:opacity-95"
+          >
+            <div className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-slate-100 sm:h-14 sm:w-14">
+              <Image
+                src="/logo.png"
+                alt="Resume Maamey Logo"
+                width={56}
+                height={56}
+                priority
+                className="h-full w-full object-contain p-1"
+              />
+            </div>
 
-      {/* Top navigation with larger logo branding */}
-      <header className="no-print sticky top-0 z-50 border-b border-line bg-white">
-        <div className="mx-auto flex h-20 max-w-[1600px] items-center justify-between px-4 sm:px-6">
-          <Brand size="md" />
+            <div className="flex flex-col justify-center">
+              <div className="text-xl font-black tracking-tight leading-tight sm:text-2xl">
+                <span style={{ color: "#0a1733" }}>Resume </span>
+                <span
+                  style={{
+                    background:
+                      "linear-gradient(90deg, #0062ff 0%, #6342f5 55%, #8f2bf5 100%)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    display: "inline-block",
+                  }}
+                >
+                  Maamey
+                </span>
+              </div>
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">
+                Free ATS Resume Maker
+              </span>
+            </div>
+          </Link>
 
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={undo}
-              disabled={!canUndo}
-              className="btn btn-ghost hidden sm:inline-flex disabled:cursor-not-allowed disabled:opacity-40"
-              title="Undo"
+          {/* Header Action Links */}
+          <div className="flex items-center gap-4 sm:gap-6">
+            <Link
+              href="/templates"
+              className="text-sm font-semibold text-slate-600 transition hover:text-slate-900"
             >
-              ↶
-            </button>
-
-            <button
-              type="button"
-              onClick={redo}
-              disabled={!canRedo}
-              className="btn btn-ghost hidden sm:inline-flex disabled:cursor-not-allowed disabled:opacity-40"
-              title="Redo"
+              Templates
+            </Link>
+            <Link
+              href="#how-it-works"
+              className="hidden text-sm font-semibold text-slate-600 transition hover:text-slate-900 sm:inline-block"
             >
-              ↷
-            </button>
-
-            <button
-              type="button"
-              onClick={handlePrint}
-              className="btn btn-ghost hidden sm:inline-flex"
+              How it works
+            </Link>
+            <Link
+              href="/editor"
+              className="inline-flex items-center justify-center rounded-lg bg-[#2563eb] px-4 py-2.5 text-xs font-bold text-white transition hover:bg-[#1d4ed8] sm:px-5 sm:text-sm"
             >
-              Print
-            </button>
-
-            <button
-              type="button"
-              onClick={handleDownloadPdf}
-              disabled={isDownloading}
-              className="btn btn-primary inline-flex items-center gap-2"
-            >
-              {isDownloading ? (
-                <>
-                  <span
-                    className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent"
-                    aria-hidden="true"
-                  />
-                  <span>Creating PDF...</span>
-                </>
-              ) : (
-                <>
-                  <span aria-hidden="true">↓</span>
-                  <span>Download PDF</span>
-                </>
-              )}
-            </button>
+              Build my resume
+            </Link>
           </div>
         </div>
       </header>
 
-      {/* Main editor */}
-      <div className="no-print">
-        <div className="mx-auto max-w-[1600px]">
-          <div className="grid min-h-[calc(100vh-5rem)] grid-cols-1 lg:grid-cols-[minmax(340px,1fr)_minmax(500px,794px)]">
-            {/* LEFT EDITOR */}
-            <aside className="border-r border-line bg-white">
-              <div className="sticky top-20 max-h-[calc(100vh-5rem)] overflow-y-auto">
-                <div className="border-b border-line px-4 py-4 sm:px-6">
-                  <div className="flex items-center justify-between gap-3">
-                    <div>
-                      <h1 className="text-lg font-extrabold tracking-[-0.02em] text-ink">
-                        Edit your resume
-                      </h1>
+      {/* Hero Section */}
+      <main className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:py-24">
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+          {/* Left Column: Headings & CTA */}
+          <div className="max-w-2xl">
+            <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-1 text-xs font-semibold text-slate-700 shadow-sm">
+              <span className="h-2 w-2 rounded-full bg-emerald-500" />
+              28 templates · No login · Free PDF
+            </div>
 
-                      <p className="mt-1 text-[12px] text-ink-500">
-                        Make changes and see them update instantly.
-                      </p>
-                    </div>
+            <h1 className="mt-6 text-4xl font-extrabold tracking-tight text-slate-900 sm:text-6xl sm:leading-[1.1]">
+              Your resume, ready in ten minutes.{" "}
+              <span
+                style={{
+                  background:
+                    "linear-gradient(90deg, #0062ff 0%, #6342f5 55%, #8f2bf5 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                }}
+              >
+                Seriously, maamey.
+              </span>
+            </h1>
 
-                    <div className="hidden rounded-full bg-brand-light px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.08em] text-brand-dark sm:block">
-                      Auto saved
-                    </div>
-                  </div>
+            <p className="mt-6 text-base leading-relaxed text-slate-600 sm:text-lg">
+              A Canva-style editor for resumes. Type on the left, see a real A4
+              page on the right, switch between designs whenever you feel like
+              it, and download a sharp vector PDF. No signup, no watermark,
+              nothing to pay.
+            </p>
+
+            <div className="mt-8 flex flex-wrap items-center gap-4">
+              <Link
+                href="/editor"
+                className="inline-flex items-center justify-center rounded-xl bg-[#2563eb] px-6 py-3.5 text-sm font-bold text-white shadow-sm transition hover:bg-[#1d4ed8]"
+              >
+                Start building — it&apos;s free
+              </Link>
+              <Link
+                href="/templates"
+                className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-6 py-3.5 text-sm font-bold text-slate-700 shadow-sm transition hover:bg-slate-50"
+              >
+                Browse all 28 templates
+              </Link>
+            </div>
+
+            {/* Quick Metrics */}
+            <div className="mt-12 grid grid-cols-3 gap-6 border-t border-slate-200 pt-8">
+              <div>
+                <div className="text-2xl font-black text-slate-900 sm:text-3xl">
+                  28
                 </div>
-
-                {/* Editor tabs */}
-                <div className="border-b border-line bg-white px-3 pt-3">
-                  <div className="grid grid-cols-4 gap-1 rounded-xl bg-canvas p-1">
-                    {PANELS.map((panel) => {
-                      const active = activePanel === panel.id;
-
-                      return (
-                        <button
-                          key={panel.id}
-                          type="button"
-                          onClick={() => setActivePanel(panel.id)}
-                          className={`rounded-lg px-2 py-2 text-[11px] font-bold transition ${
-                            active
-                              ? "bg-white text-ink shadow-sm"
-                              : "text-ink-500 hover:text-ink"
-                          }`}
-                        >
-                          {panel.label}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Active editor panel */}
-                <div>
-                  {activePanel === "content" && <ContentPanel />}
-                  {activePanel === "design" && <DesignPanel />}
-                  {activePanel === "sections" && <SectionsPanel />}
-                  {activePanel === "templates" && <TemplatePanel />}
+                <div className="mt-1 text-xs font-medium text-slate-500">
+                  Curated Templates
                 </div>
               </div>
-            </aside>
+              <div>
+                <div className="text-2xl font-black text-slate-900 sm:text-3xl">
+                  A4
+                </div>
+                <div className="mt-1 text-xs font-medium text-slate-500">
+                  Vector Standard
+                </div>
+              </div>
+              <div>
+                <div className="text-2xl font-black text-slate-900 sm:text-3xl">
+                  0
+                </div>
+                <div className="mt-1 text-xs font-medium text-slate-500">
+                  Watermarks / Fees
+                </div>
+              </div>
+            </div>
+          </div>
 
-            {/* RIGHT PREVIEW */}
-            <section className="min-w-0 bg-canvas">
-              <div className="sticky top-20 z-20 border-b border-line bg-white/95 backdrop-blur">
-                <div className="flex items-center justify-between gap-3 px-4 py-3 sm:px-6">
-                  <div>
-                    <div className="text-sm font-bold text-ink">
-                      Live preview
-                    </div>
-
-                    <div className="text-[11px] text-ink-300">
-                      A4 · {pageCount}{" "}
-                      {pageCount === 1 ? "page" : "pages"}
-                    </div>
+          {/* Right Column: Visual Preview Stack */}
+          <div className="relative flex justify-center lg:justify-end">
+            <div className="relative h-[480px] w-full max-w-[420px] rounded-2xl border border-slate-200 bg-white p-4 shadow-2xl sm:h-[560px] sm:max-w-[460px]">
+              <div className="relative h-full w-full overflow-hidden rounded-lg bg-slate-50">
+                <div className="absolute inset-0 flex flex-col justify-between p-6">
+                  <div className="space-y-3">
+                    <div className="h-4 w-1/3 rounded bg-slate-200" />
+                    <div className="h-7 w-3/4 rounded bg-slate-800" />
+                    <div className="h-3 w-1/2 rounded bg-slate-300" />
                   </div>
-
-                  <div className="flex items-center gap-1 rounded-lg border border-line bg-white p-1">
-                    <button
-                      type="button"
-                      onClick={() => setZoom("fit")}
-                      className={`rounded-md px-2.5 py-1.5 text-[11px] font-bold ${
-                        zoom === "fit"
-                          ? "bg-ink text-white"
-                          : "text-ink-500 hover:text-ink"
-                      }`}
-                    >
-                      Fit
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => setZoom(0.75)}
-                      className={`rounded-md px-2.5 py-1.5 text-[11px] font-bold ${
-                        zoom === 0.75
-                          ? "bg-ink text-white"
-                          : "text-ink-500 hover:text-ink"
-                      }`}
-                    >
-                      75%
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => setZoom(1)}
-                      className={`rounded-md px-2.5 py-1.5 text-[11px] font-bold ${
-                        zoom === 1
-                          ? "bg-ink text-white"
-                          : "text-ink-500 hover:text-ink"
-                      }`}
-                    >
-                      100%
-                    </button>
+                  <div className="space-y-4">
+                    <div className="h-3 w-full rounded bg-slate-200" />
+                    <div className="h-3 w-5/6 rounded bg-slate-200" />
+                    <div className="h-3 w-4/6 rounded bg-slate-200" />
+                  </div>
+                  <div className="space-y-2">
+                    <div className="h-3 w-1/4 rounded bg-blue-500" />
+                    <div className="h-3 w-full rounded bg-slate-200" />
+                    <div className="h-3 w-3/4 rounded bg-slate-200" />
                   </div>
                 </div>
               </div>
-
-              <div className="min-h-[calc(100vh-8rem)] overflow-auto px-3 py-6 sm:px-6 sm:py-8">
-                <A4Preview
-                  data={data}
-                  zoom={zoom}
-                  onPageCount={setPageCount}
-                />
-              </div>
-            </section>
+            </div>
           </div>
         </div>
-      </div>
+      </main>
 
-      {/* Mobile download bar */}
-      <div className="no-print fixed bottom-0 left-0 right-0 z-40 border-t border-line bg-white p-3 shadow-lg lg:hidden">
-        <div className="flex gap-2">
-          <button
-            type="button"
-            onClick={handlePrint}
-            className="btn btn-ghost flex-1"
-          >
-            Print
-          </button>
-
-          <button
-            type="button"
-            onClick={handleDownloadPdf}
-            disabled={isDownloading}
-            className="btn btn-primary flex-[2]"
-          >
-            {isDownloading
-              ? "Creating PDF..."
-              : "↓ Download PDF"}
-          </button>
+      {/* Footer */}
+      <footer className="border-t border-slate-200 bg-white py-8">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 sm:flex-row sm:px-6">
+          <p className="text-xs text-slate-500">
+            © {new Date().getFullYear()} Resume Maamey. All rights reserved.
+          </p>
+          <div className="flex gap-6 text-xs text-slate-500">
+            <Link href="/privacy" className="hover:text-slate-800">
+              Privacy Policy
+            </Link>
+            <Link href="/terms" className="hover:text-slate-800">
+              Terms of Service
+            </Link>
+            <Link href="/sitemap.xml" className="hover:text-slate-800">
+              Sitemap
+            </Link>
+          </div>
         </div>
-      </div>
-    </main>
+      </footer>
+    </div>
   );
 }

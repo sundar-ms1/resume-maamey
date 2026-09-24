@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
 
-const SITE_URL = "https://resumemaamey.in";
+const SITE_URL = "https://www.resumemaamey.in";
 const GA_MEASUREMENT_ID = "G-X9NX4Z76Y9";
 const ADSENSE_PUB_ID = "ca-pub-6119006421731405";
 
