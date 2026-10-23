@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
 
@@ -58,7 +58,7 @@ export default function PrivacyPage() {
           </section>
           <section>
             <h2 className="text-xl font-bold text-slate-900">8. Contact</h2>
-            <p className="mt-2">For privacy questions, email <a className="text-blue-700 underline" href="mailto:support@resumemaamey.in">support@resumemaamey.in</a> or visit our <Link href="/contact" className="text-blue-700 underline">Contact Us</Link> page.</p>
+            <p className="mt-2">For privacy questions, email <a className="text-blue-700 underline" href="mailto:sundar15072002@gmail.com">sundar15072002@gmail.com</a> or visit our <Link href="/contact" className="text-blue-700 underline">Contact Us</Link> page.</p>
           </section>
         </div>
       </article>
@@ -66,3 +66,4 @@ export default function PrivacyPage() {
     </>
   );
 }
+

@@ -1,9 +1,9 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import Link from 'next/link';
 import { SiteHeader } from "@/components/SiteHeader";
 
 export const metadata: Metadata = {
-  title: 'Terms of Service — Resume Maamey',
+  title: 'Terms of Service â€” Resume Maamey',
   description: 'Terms and conditions for using Resume Maamey.',
   alternates: { canonical: '/terms' },
 };
@@ -61,10 +61,11 @@ export default function TermsPage() {
         </div>
         <div>
           <h2 className="text-xl font-semibold mb-2 text-slate-900 dark:text-white">8. Contact</h2>
-          <p>Questions about these terms can be sent to <a href="mailto:support@resumemaamey.in" className="text-blue-600 underline">support@resumemaamey.in</a>.</p>
+          <p>Questions about these terms can be sent to <a href="mailto:sundar15072002@gmail.com" className="text-blue-600 underline">sundar15072002@gmail.com</a>.</p>
         </div>
       </section>
     </div>
     </>
   );
 }
+

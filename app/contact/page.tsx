@@ -1,9 +1,10 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { SiteHeader } from "@/components/SiteHeader";
 
 export const metadata: Metadata = {
   title: "Contact Us | Resume Maamey",
-  description: "Get in touch with the Resume Maamey team for feedback, inquiries, or support.",
+  description:
+    "Contact Resume Maamey for resume builder support, feedback, inquiries, or template suggestions.",
   alternates: { canonical: "/contact" },
 };
 
@@ -11,33 +12,51 @@ export default function ContactPage() {
   return (
     <>
       <SiteHeader />
-    <div className="min-h-screen bg-slate-50 text-slate-800 py-16 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-2xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-sm border border-slate-200">
-        <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight sm:text-4xl mb-4">
-          Contact Us
-        </h1>
-        <p className="text-slate-600 mb-8 leading-relaxed">
-          Have a question about using our resume builder, spotted a bug, or want to suggest a new template? We are here to help.
-        </p>
+      <main className="min-h-screen bg-slate-50 px-4 py-16 text-slate-800 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-2xl rounded-2xl border border-slate-200 bg-white p-8 shadow-sm sm:p-12">
+          <h1 className="mb-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+            Contact Us
+          </h1>
 
-        <div className="space-y-6">
-          <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 flex flex-col gap-1">
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Email Address</span>
-            <a href="mailto:support@resumemaamey.in" className="text-lg font-medium text-blue-700 underline underline-offset-2">support@resumemaamey.in</a>
-          </div>
+          <p className="mb-8 leading-relaxed text-slate-600">
+            Have a question about using our resume builder, spotted a bug, or
+            want to suggest a new template? We are here to help.
+          </p>
 
-          <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 flex flex-col gap-1">
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Response Time</span>
-            <span className="text-slate-800">Please include the page URL and a short description of the issue so we can understand your request.</span>
-          </div>
+          <div className="space-y-6">
+            <section className="flex flex-col gap-1 rounded-xl border border-slate-200 bg-slate-50 p-4">
+              <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                Email Address
+              </span>
+              <a
+                href="mailto:sundar15072002@gmail.com"
+                className="break-words text-lg font-medium text-blue-700 underline underline-offset-2"
+              >
+                sundar15072002@gmail.com
+              </a>
+            </section>
 
-          <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 flex flex-col gap-1">
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Location</span>
-            <span className="text-slate-800">Tamil Nadu, India</span>
+            <section className="flex flex-col gap-1 rounded-xl border border-slate-200 bg-slate-50 p-4">
+              <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                Response Information
+              </span>
+              <p className="text-slate-800">
+                When contacting us, please include the page URL and a short
+                description of your issue or question so we can assist you.
+              </p>
+            </section>
+
+            <section className="flex flex-col gap-1 rounded-xl border border-slate-200 bg-slate-50 p-4">
+              <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                Location
+              </span>
+              <p className="text-slate-800">Tamil Nadu, India</p>
+            </section>
           </div>
         </div>
-      </div>
-    </div>
+      </main>
     </>
   );
 }
+
+
