@@ -2,7 +2,7 @@
 
 import { NavLink } from '@/components/NavLink';
 import { useState } from 'react';
-import { SiteFooter, SiteHeader } from '@/components/SiteHeader';
+import { SiteHeader } from '@/components/SiteHeader';
 import { TemplateThumb } from '@/components/TemplateThumb';
 import { TEMPLATES, TEMPLATE_CATEGORIES } from '@/lib/templates';
 import { SAMPLE_RESUME } from '@/lib/sampleData';
@@ -69,7 +69,6 @@ export default function TemplatesPage() {
           ))}
         </div>
       </section>
-      <SiteFooter />
     </div>
   );
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { GUIDES } from "@/lib/guidesData";
+import { SiteHeader } from "@/components/SiteHeader";
 
 interface Props {
   params: { slug: string };
@@ -20,6 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${guide.title} | Resume Maamey`,
     description: guide.description,
+    alternates: { canonical: `/guides/${guide.slug}` },
   };
 }
 
@@ -31,6 +33,8 @@ export default function GuideDetailPage({ params }: Props) {
   }
 
   return (
+    <>
+      <SiteHeader />
     <article className="min-h-screen bg-slate-50 py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-sm border border-slate-200">
         <Link
@@ -90,5 +94,6 @@ export default function GuideDetailPage({ params }: Props) {
         </div>
       </div>
     </article>
+    </>
   );
 }

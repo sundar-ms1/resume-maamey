@@ -1,196 +1,68 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+import { SiteHeader } from "@/components/SiteHeader";
 
-export default function HomePage() {
+export const metadata: Metadata = {
+  title: "Privacy Policy | Resume Maamey",
+  description:
+    "Read how Resume Maamey handles resume information, website analytics, cookies and advertising technologies.",
+  alternates: { canonical: "/privacy" },
+};
+
+export default function PrivacyPage() {
   return (
-    <div className="flex min-h-screen flex-col bg-white">
-      {/* Navigation */}
-      <header className="sticky top-0 z-50 border-b border-line bg-white/95 backdrop-blur">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
-          <Link href="/" className="flex items-center gap-3">
-            {/* Logo */}
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-ink text-sm font-bold text-white">
-              RM
-            </div>
+    <>
+      <SiteHeader />
+    <main className="min-h-screen bg-slate-50 px-4 py-12 text-slate-800 sm:px-6 lg:px-8">
+      <article className="mx-auto max-w-3xl rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-10">
+        <Link href="/" className="mb-6 inline-block text-sm font-medium text-blue-700 hover:underline">
+          &larr; Back to Resume Maamey
+        </Link>
+        <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">Privacy Policy</h1>
+        <p className="mt-3 text-sm text-slate-500">Last updated: October 23, 2026</p>
+        <p className="mt-6 leading-7">
+          This policy explains how Resume Maamey ("we", "our" or "the website") handles information when you visit
+          resumemaamey.in and use our resume-building tools. Please read it together with our <Link href="/terms" className="text-blue-700 underline">Terms of Service</Link>.
+        </p>
 
-            {/* Brand Name */}
-            <div>
-              <div className="text-sm font-bold tracking-tight">
-                <span className="text-[#101a3a]">Resume </span>
-                <span className="bg-gradient-to-r from-[#168cff] via-[#3158ed] to-[#6d16e8] bg-clip-text text-transparent">
-                  Maamey
-                </span>
-              </div>
-
-              <div className="text-[11px] text-ink-500">
-                Free ATS Resume Maker
-              </div>
-            </div>
-          </Link>
-
-          <div className="flex items-center gap-4">
-            <Link
-              href="/templates"
-              className="text-sm font-medium text-ink-500 hover:text-ink"
-            >
-              Templates
-            </Link>
-
-            <Link href="/editor" className="btn btn-primary">
-              Build My Resume
-            </Link>
-          </div>
+        <div className="mt-8 space-y-8 leading-7">
+          <section>
+            <h2 className="text-xl font-bold text-slate-900">1. Resume information you enter</h2>
+            <p className="mt-2">The resume editor is designed to create and format your resume in your browser. The project does not provide an account-based resume database or a server-side resume submission feature. Your draft is held in the editor while you use it; the editor also lets you download a draft file to your own device if that feature is available in your version.</p>
+            <p className="mt-2">Avoid entering information you do not want displayed in a resume. You are responsible for where you store, share or upload exported files.</p>
+          </section>
+          <section>
+            <h2 className="text-xl font-bold text-slate-900">2. Analytics and technical information</h2>
+            <p className="mt-2">The website uses Google Analytics 4 to understand site usage, such as which pages are visited and how visitors interact with the website. Analytics providers may use cookies or similar technologies and may process technical information such as browser, device, approximate location and page interaction data according to their own terms and settings.</p>
+          </section>
+          <section>
+            <h2 className="text-xl font-bold text-slate-900">3. Advertising and cookies</h2>
+            <p className="mt-2">The website loads Google AdSense and may use other advertising services. These providers may use cookies, identifiers or similar technologies to deliver, measure and personalise ads, subject to your location, consent choices and the provider's policies. Third-party vendors, including Google, may use cookies to serve ads based on visits to this website or other websites.</p>
+            <p className="mt-2">You can manage available ad personalisation and cookie choices through Google's ad settings and the controls provided by your browser. Blocking cookies may affect some website or advertising features.</p>
+          </section>
+          <section>
+            <h2 className="text-xl font-bold text-slate-900">4. Third-party services and links</h2>
+            <p className="mt-2">The website may load services provided by third parties, including analytics, advertising or fonts. Those providers process data under their own privacy policies. We do not control the privacy practices of external websites linked from our pages.</p>
+          </section>
+          <section>
+            <h2 className="text-xl font-bold text-slate-900">5. Data sharing and security</h2>
+            <p className="mt-2">We do not sell the resume text you enter in the editor. We do not operate a user account system for storing resumes. No internet service can guarantee absolute security, so please keep downloaded drafts and exported resumes in a secure location.</p>
+          </section>
+          <section>
+            <h2 className="text-xl font-bold text-slate-900">6. Children's privacy</h2>
+            <p className="mt-2">Resume Maamey is a general-purpose career tool and is not designed to collect personal information from children. If you believe a child has submitted personal information to us through a contact channel, please contact us so we can assess the request.</p>
+          </section>
+          <section>
+            <h2 className="text-xl font-bold text-slate-900">7. Your choices and policy updates</h2>
+            <p className="mt-2">You can stop using the website at any time, clear browser data using your browser controls, and manage available Google ad settings. We may update this policy when the website or applicable requirements change. The date at the top indicates the latest revision.</p>
+          </section>
+          <section>
+            <h2 className="text-xl font-bold text-slate-900">8. Contact</h2>
+            <p className="mt-2">For privacy questions, email <a className="text-blue-700 underline" href="mailto:support@resumemaamey.in">support@resumemaamey.in</a> or visit our <Link href="/contact" className="text-blue-700 underline">Contact Us</Link> page.</p>
+          </section>
         </div>
-      </header>
-
-      <main className="flex-1">
-        {/* Hero Section */}
-        <section className="px-4 py-20 text-center sm:px-6 lg:py-28">
-          <div className="mx-auto max-w-4xl">
-            <span className="rounded-full bg-brand-light px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-brand-dark">
-              100% Free · No Sign-up Required
-            </span>
-
-            <h1 className="mt-6 text-4xl font-black tracking-tight text-ink sm:text-6xl">
-              Create an ATS-Friendly Resume <br className="hidden sm:inline" />
-              That Lands Job Interviews.
-            </h1>
-
-            <p className="mx-auto mt-6 max-w-2xl text-lg text-ink-500">
-              Clean layout, professional ATS-tested templates, live
-              side-by-side editing, and one-click high-resolution PDF
-              download.
-            </p>
-
-            <div className="mt-10 flex flex-wrap justify-center gap-4">
-              <Link
-                href="/editor"
-                className="btn btn-primary px-8 py-3.5 text-base"
-              >
-                Create My Resume Now →
-              </Link>
-
-              <Link
-                href="/templates"
-                className="btn btn-ghost border border-line px-8 py-3.5 text-base"
-              >
-                View Templates
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* Feature Grid */}
-        <section className="border-t border-line bg-canvas px-4 py-16 sm:px-6">
-          <div className="mx-auto max-w-7xl">
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-              <div className="rounded-2xl border border-line bg-white p-6 shadow-sm">
-                <div className="mb-4 text-2xl font-bold text-brand">01</div>
-
-                <h3 className="text-lg font-bold text-ink">
-                  ATS-Optimized Formatting
-                </h3>
-
-                <p className="mt-2 text-sm text-ink-500">
-                  Engineered strictly around standard parsing structures so
-                  applicant tracking systems never drop your qualifications.
-                </p>
-              </div>
-
-              <div className="rounded-2xl border border-line bg-white p-6 shadow-sm">
-                <div className="mb-4 text-2xl font-bold text-brand">02</div>
-
-                <h3 className="text-lg font-bold text-ink">
-                  Live Visual Feedback
-                </h3>
-
-                <p className="mt-2 text-sm text-ink-500">
-                  See real-time changes reflected directly on an A4 preview
-                  with auto page-count warnings and automatic zoom scaling.
-                </p>
-              </div>
-
-              <div className="rounded-2xl border border-line bg-white p-6 shadow-sm">
-                <div className="mb-4 text-2xl font-bold text-brand">03</div>
-
-                <h3 className="text-lg font-bold text-ink">
-                  Private & Fast PDF Output
-                </h3>
-
-                <p className="mt-2 text-sm text-ink-500">
-                  Your details never leave your browser. Resumes compile
-                  client-side into clean, vector-rendered PDFs.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQ Section */}
-        <section className="border-t border-line px-4 py-16 sm:px-6">
-          <div className="mx-auto max-w-3xl">
-            <h2 className="text-center text-3xl font-extrabold text-ink">
-              Frequently Asked Questions
-            </h2>
-
-            <div className="mt-8 space-y-4">
-              <div className="rounded-xl border border-line p-5">
-                <h3 className="font-bold text-ink">
-                  Is Resume Maamey completely free?
-                </h3>
-
-                <p className="mt-2 text-sm text-ink-500">
-                  Yes. You can build, edit, and export your resume as a clean
-                  PDF without paying or creating an account.
-                </p>
-              </div>
-
-              <div className="rounded-xl border border-line p-5">
-                <h3 className="font-bold text-ink">
-                  Are these templates readable by ATS?
-                </h3>
-
-                <p className="mt-2 text-sm text-ink-500">
-                  Yes, every template is structured using semantic headings
-                  and clean text hierarchy designed to pass recruiter
-                  scanners.
-                </p>
-              </div>
-
-              <div className="rounded-xl border border-line p-5">
-                <h3 className="font-bold text-ink">Is my data secure?</h3>
-
-                <p className="mt-2 text-sm text-ink-500">
-                  All your data stays local in your browser session. We do not
-                  store or sell personal resumes.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      {/* Footer */}
-      <footer className="border-t border-line bg-white py-8">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 sm:flex-row sm:px-6">
-          <p className="text-xs text-ink-500">
-            © {new Date().getFullYear()} Resume Maamey. All rights reserved.
-          </p>
-
-          <div className="flex gap-6 text-xs text-ink-500">
-            <Link href="/privacy" className="hover:text-ink">
-              Privacy Policy
-            </Link>
-
-            <Link href="/terms" className="hover:text-ink">
-              Terms of Service
-            </Link>
-
-            <Link href="/sitemap.xml" className="hover:text-ink">
-              Sitemap
-            </Link>
-          </div>
-        </div>
-      </footer>
-    </div>
+      </article>
+    </main>
+    </>
   );
 }

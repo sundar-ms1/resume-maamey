@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import { GUIDES } from "@/lib/guidesData";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://resumemaamey.in";
+  const baseUrl = "https://www.resumemaamey.in";
 
   const staticRoutes = [
     "",

@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { SiteHeader } from "@/components/SiteHeader";
 
 export const metadata: Metadata = {
   title: "About Us | Resume Maamey",
   description: "Learn more about Resume Maamey and our mission to provide free, high-quality resume building tools.",
+  alternates: { canonical: "/about" },
 };
 
 export default function AboutPage() {
   return (
+    <>
+      <SiteHeader />
     <div className="min-h-screen bg-slate-50 text-slate-800 py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-sm border border-slate-200">
         <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight sm:text-4xl mb-6">
@@ -23,7 +27,7 @@ export default function AboutPage() {
             Our Purpose
           </h2>
           <p>
-            Landing an interview in today's competitive job market is challenging. Most candidates get filtered out by automated Applicant Tracking Systems (ATS) simply due to poor formatting or lack of relevant keyword structuring. We built Resume Maamey to eliminate that barrier by offering clean, industry-standard resume templates alongside practical, expert-backed writing advice.
+            Landing an interview in today's competitive job market is challenging. Most candidates get filtered out by automated Applicant Tracking Systems (ATS) simply due to poor formatting or lack of relevant keyword structuring. We built Resume Maamey to eliminate that barrier by offering clean, industry-standard resume templates alongside practical resume-writing guidance and examples.
           </p>
 
           <h2 className="text-xl font-bold text-slate-900 pt-4 border-t border-slate-100">
@@ -34,7 +38,7 @@ export default function AboutPage() {
               <strong>Clean & Modern Builder:</strong> A streamlined, client-side editor focused on readability and print-perfect A4 formatting.
             </li>
             <li>
-              <strong>ATS Compatibility:</strong> Layouts structured so automated recruitment software parses your details cleanly.
+              <strong>Readable layouts:</strong> Templates use clear text and headings, though no format can guarantee how every employer’s ATS will parse a resume.
             </li>
             <li>
               <strong>Educational Guides:</strong> Up-to-date career advice, resume breakdown tutorials, and actionable tips for modern hiring standards.
@@ -45,7 +49,7 @@ export default function AboutPage() {
             Privacy & Trust
           </h2>
           <p>
-            We believe your career data is yours alone. Our browser-based editor is designed to prioritize data privacy without unnecessary tracking or third-party sharing.
+            The resume editor is designed to process resume content in your browser rather than in a Resume Maamey account database. The website also loads analytics and advertising services, which may process technical usage information under their own policies. Read our Privacy Policy for details about these services and your available choices.
           </p>
 
           <div className="pt-6 border-t border-slate-100 flex items-center justify-between">
@@ -65,5 +69,6 @@ export default function AboutPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }

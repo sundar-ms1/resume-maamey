@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { GUIDES } from "@/lib/guidesData";
+import { SiteHeader } from "@/components/SiteHeader";
 
 export const metadata: Metadata = {
   title: "Career & Resume Writing Guides | Resume Maamey",
-  description: "Explore in-depth articles on crafting ATS-optimized resumes, writing powerful bullet points, and landing job interviews.",
+  description: "Explore practical, original guides on resume structure, fresher resumes, action verbs and career changes.",
+  alternates: { canonical: "/guides" },
 };
 
 export default function GuidesPage() {
   return (
+    <>
+      <SiteHeader />
     <div className="min-h-screen bg-slate-50 py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
@@ -50,5 +54,6 @@ export default function GuidesPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }

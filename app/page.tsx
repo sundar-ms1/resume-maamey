@@ -1,11 +1,13 @@
 'use client';
 
 import { NavLink } from '@/components/NavLink';
+import Link from 'next/link';
 import { useState } from 'react';
-import { SiteFooter, SiteHeader } from '@/components/SiteHeader';
+import { SiteHeader } from '@/components/SiteHeader';
 import { TemplateThumb } from '@/components/TemplateThumb';
 import { TEMPLATES } from '@/lib/templates';
 import { SAMPLE_RESUME } from '@/lib/sampleData';
+import { GUIDES } from '@/lib/guidesData';
 
 const FEATURES = [
   {
@@ -51,8 +53,8 @@ const FEATURES = [
     ),
   },
   {
-    title: 'ATS-safe structure',
-    body: 'Clean semantic text, real headings, no text inside images. Parsers read it the same way a recruiter does.',
+    title: 'Readable resume structure',
+    body: 'Clean semantic text, real headings, no text inside images. Clear text order and conventional headings can help people and software find key details.',
     icon: (
       <>
         <circle cx="11" cy="11" r="6.5" />
@@ -62,7 +64,7 @@ const FEATURES = [
   },
   {
     title: 'No login, ever',
-    body: 'No account, no email, no paywall at the download button. Your draft stays in your own browser.',
+    body: 'No account, no email, no paywall at the download button. Your resume is edited in the browser; download a draft file if you need to keep a copy.',
     icon: (
       <>
         <rect x="4.5" y="10.5" width="15" height="10" rx="2" />
@@ -82,8 +84,8 @@ const STEPS = [
 const FAQ = [
   { q: 'Is Resume Maamey really free?', a: 'Yes. Every template and the PDF export are free. There is no account, no trial, no watermark and no paywall at the download step.' },
   { q: 'How do I get the best PDF quality?', a: 'Click Download PDF, then pick "Save as PDF" as the destination, set margins to None and keep scale at 100%. The export is vector, so the text stays selectable and crisp at any zoom.' },
-  { q: 'Will my resume pass an ATS?', a: 'The single-column templates — Chennai, Velankanni, Dindigul, Kanchi and Tenkasi among them — use plain text order, real headings and no tables or images, which is what applicant tracking systems parse best.' },
-  { q: 'Does my data get uploaded anywhere?', a: 'No. The editor runs entirely in your browser and your draft is stored locally on your device. Nothing is sent to a server.' },
+  { q: 'Can you guarantee my resume will pass an ATS?', a: "No template can guarantee an ATS result because employers use different systems and settings. A simple single-column layout with conventional headings can make your information easier for many systems to parse; always follow the employer's file and application instructions." },
+  { q: 'Does my resume get uploaded to a resume server?', a: 'The editor is designed to process resume content in your browser and does not send your resume to a Resume Maamey account or resume database. The website separately loads analytics and advertising services; see the Privacy Policy for details. Your draft is not automatically saved after you close the page, so download a draft file if you want to keep it.' },
   { q: 'Can I make a two-page resume?', a: 'Yes. Keep typing and the canvas grows, with a dashed guide showing where page two begins. The PDF will contain both pages.' },
   { q: 'Does it work on my phone?', a: 'Yes. On small screens the editor stacks — edit content, then flip to the preview tab to check the page before you download.' },
 ];
@@ -212,7 +214,7 @@ export default function HomePage() {
       </section>
 
       {/* how */}
-      <section id="how" className="mx-auto max-w-6xl scroll-mt-20 px-5 py-16">
+      <section id="how-it-works" className="mx-auto max-w-6xl scroll-mt-20 px-5 py-16">
         <h2 className="text-[1.6rem] font-extrabold tracking-[-0.02em] text-ink">Four steps, no detours</h2>
         <ol className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {STEPS.map((s) => (
@@ -223,6 +225,51 @@ export default function HomePage() {
             </li>
           ))}
         </ol>
+      </section>
+
+      {/* practical resume guidance */}
+      <section className="border-y border-line bg-canvas">
+        <div className="mx-auto max-w-6xl px-5 py-16">
+          <div className="max-w-3xl">
+            <p className="text-xs font-bold uppercase tracking-[0.14em] text-brand">A practical starting point</p>
+            <h2 className="mt-2 text-[1.6rem] font-extrabold tracking-[-0.02em] text-ink">What makes a resume easier to review?</h2>
+            <p className="mt-3 text-[14px] leading-relaxed text-ink-500">
+              A strong resume helps a recruiter find the information needed for a particular role quickly. There is no layout or keyword trick that guarantees an interview, but clear structure and specific evidence make your experience easier to understand.
+            </p>
+          </div>
+          <div className="mt-8 grid gap-5 md:grid-cols-3">
+            <article className="card p-5">
+              <h3 className="text-[15px] font-bold text-ink">1. Put relevant details first</h3>
+              <p className="mt-2 text-[13.5px] leading-relaxed text-ink-500">For an experienced applicant, lead with relevant experience. For a fresher, education, projects, internships or practical training may deserve more space.</p>
+            </article>
+            <article className="card p-5">
+              <h3 className="text-[15px] font-bold text-ink">2. Show evidence, not just duties</h3>
+              <p className="mt-2 text-[13.5px] leading-relaxed text-ink-500">Instead of “handled customer calls,” explain the type of work, volume or outcome when you can support it with a real example.</p>
+              <p className="mt-3 rounded-lg bg-canvas p-3 text-[12.5px] leading-relaxed text-ink-500"><strong>Example:</strong> “Answered customer enquiries and updated order records daily.” Add a verified result or volume only if it is accurate.</p>
+            </article>
+            <article className="card p-5">
+              <h3 className="text-[15px] font-bold text-ink">3. Keep formatting predictable</h3>
+              <p className="mt-2 text-[13.5px] leading-relaxed text-ink-500">Use recognisable headings, readable type and consistent dates. If an employer requests a particular file type, follow that instruction even when you prefer PDF.</p>
+            </article>
+          </div>
+          <div className="mt-10 flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <h2 className="text-[1.35rem] font-extrabold tracking-[-0.02em] text-ink">Free resume writing guides</h2>
+              <p className="mt-2 text-[14px] text-ink-500">Step-by-step advice for freshers, job seekers and people updating an existing resume.</p>
+            </div>
+            <Link href="/guides" className="btn btn-ghost">Browse all guides</Link>
+          </div>
+          <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {GUIDES.slice(0, 3).map((guide) => (
+              <article key={guide.slug} className="card p-5">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-ink-300">{guide.readTime}</p>
+                <h3 className="mt-2 text-[15px] font-bold leading-snug text-ink">{guide.title}</h3>
+                <p className="mt-2 text-[13px] leading-relaxed text-ink-500">{guide.description}</p>
+                <Link href={`/guides/${guide.slug}`} className="mt-4 inline-flex text-[13px] font-bold text-brand">Read guide →</Link>
+              </article>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* faq */}
@@ -256,7 +303,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      <SiteFooter />
     </div>
   );
 }

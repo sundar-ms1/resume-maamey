@@ -40,6 +40,12 @@ export function SiteHeader() {
             Templates
           </Link>
           <Link
+            href="/guides"
+            className="hidden text-sm font-semibold text-ink-500 transition hover:text-ink md:inline-block"
+          >
+            Guides
+          </Link>
+          <Link
             href="/#how-it-works"
             className="hidden text-sm font-semibold text-ink-500 transition hover:text-ink sm:inline-block"
           >
