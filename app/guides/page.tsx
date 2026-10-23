@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { GUIDES } from "@/lib/guidesData";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -57,3 +57,4 @@ export default function GuidesPage() {
     </>
   );
 }
+

@@ -1,4 +1,4 @@
-export interface Guide {
+﻿export interface Guide {
   slug: string;
   title: string;
   description: string;
@@ -251,3 +251,4 @@ export const GUIDES: Guide[] = [
     ]
   }
 ];
+
