@@ -42,6 +42,34 @@ export default function TemplatesPage() {
         </div>
       </section>
 
+      <section className="mx-auto max-w-6xl px-5 pt-8">
+        <div className="rounded-xl border border-line bg-canvas p-6">
+          <h2 className="text-lg font-bold text-ink">How to choose a resume template</h2>
+          <div className="mt-4 grid gap-5 md:grid-cols-3">
+            <article>
+              <h3 className="text-sm font-bold text-ink">Simple, single-column</h3>
+              <p className="mt-2 text-sm leading-relaxed text-ink-500">
+                A practical starting point for many applications. Use clear headings and straightforward reading order, especially when applying through an online recruitment system.
+              </p>
+            </article>
+            <article>
+              <h3 className="text-sm font-bold text-ink">Sidebar layout</h3>
+              <p className="mt-2 text-sm leading-relaxed text-ink-500">
+                Consider this style when visual presentation matters and your key skills or contact details fit comfortably in a separate column. Check that the exported document remains easy to read.
+              </p>
+            </article>
+            <article>
+              <h3 className="text-sm font-bold text-ink">Traditional or serif</h3>
+              <p className="mt-2 text-sm leading-relaxed text-ink-500">
+                A restrained design can suit formal, academic, or senior applications. Prioritise relevant experience, readable type, and consistent dates over decoration.
+              </p>
+            </article>
+          </div>
+          <p className="mt-4 text-sm leading-relaxed text-ink-500">
+            Before applying, follow the employer’s file-format instructions, check every date and contact detail, and make sure your resume describes your own experience accurately. No template can guarantee an interview or an ATS result.
+          </p>
+        </div>
+      </section>
       <section className="mx-auto max-w-6xl px-5 py-12">
         <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
           {list.map((t) => (
