@@ -1,3 +1,4 @@
+
 import type { Metadata } from "next";
 import Script from "next/script";
 import Link from "next/link";
@@ -95,71 +96,97 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Schema Markup */}
         <script
+          id="resume-maamey-jsonld"
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLd),
+          }}
         />
+      </head>
 
+      <body className="min-h-screen bg-canvas text-ink antialiased flex flex-col">
         {/* Google AdSense */}
-        <script
-          async
+        <Script
+          id="google-adsense"
+          strategy="afterInteractive"
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_PUB_ID}`}
           crossOrigin="anonymous"
         />
-      </head>
-      <body className="min-h-screen bg-canvas text-ink antialiased flex flex-col">
+
         {/* Google Analytics 4 */}
         <Script
+          id="google-analytics-library"
           strategy="afterInteractive"
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
         />
+
         <Script
           id="google-analytics"
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '${GA_MEASUREMENT_ID}', {
+              function gtag(){window.dataLayer.push(arguments);}
+              window.gtag = window.gtag || gtag;
+              window.gtag('js', new Date());
+              window.gtag('config', '${GA_MEASUREMENT_ID}', {
                 page_path: window.location.pathname,
               });
             `,
           }}
         />
 
-        {/* Main Content View */}
-        <div className="flex-1 flex flex-col">
-          {children}
-        </div>
+        <div className="flex-1 flex flex-col">{children}</div>
 
         {/* Global Footer */}
         <footer className="w-full bg-white border-t border-slate-200 py-10 px-4 sm:px-6 lg:px-8 mt-auto print:hidden">
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-slate-500">
             <div className="flex flex-col sm:flex-row items-center gap-2">
-              <span className="font-semibold text-slate-800">Resume Maamey</span>
+              <span className="font-semibold text-slate-800">
+                Resume Maamey
+              </span>
               <span className="hidden sm:inline">•</span>
-              <span>© {new Date().getFullYear()} All rights reserved.</span>
+              <span>
+                © {new Date().getFullYear()} All rights reserved.
+              </span>
             </div>
 
             <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-medium">
-              <Link href="/guides" className="hover:text-slate-900 transition-colors">
+              <Link
+                href="/guides"
+                className="hover:text-slate-900 transition-colors"
+              >
                 Guides
               </Link>
-              <Link href="/templates" className="hover:text-slate-900 transition-colors">
+              <Link
+                href="/templates"
+                className="hover:text-slate-900 transition-colors"
+              >
                 Templates
               </Link>
-              <Link href="/about" className="hover:text-slate-900 transition-colors">
+              <Link
+                href="/about"
+                className="hover:text-slate-900 transition-colors"
+              >
                 About Us
               </Link>
-              <Link href="/contact" className="hover:text-slate-900 transition-colors">
+              <Link
+                href="/contact"
+                className="hover:text-slate-900 transition-colors"
+              >
                 Contact Us
               </Link>
-              <Link href="/privacy" className="hover:text-slate-900 transition-colors">
+              <Link
+                href="/privacy"
+                className="hover:text-slate-900 transition-colors"
+              >
                 Privacy Policy
               </Link>
-              <Link href="/terms" className="hover:text-slate-900 transition-colors">
+              <Link
+                href="/terms"
+                className="hover:text-slate-900 transition-colors"
+              >
                 Terms of Service
               </Link>
             </nav>
