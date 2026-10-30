@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -49,7 +50,6 @@ export default function EditorPage() {
     try {
       setIsDownloading(true);
 
-      // Allow the latest editor change to render before capturing.
       await new Promise<void>((resolve) => {
         requestAnimationFrame(() => {
           requestAnimationFrame(() => resolve());
@@ -69,10 +69,6 @@ export default function EditorPage() {
     }
   };
 
-  const handlePrint = () => {
-    window.print();
-  };
-
   if (!mounted) {
     return (
       <main className="min-h-screen bg-canvas">
@@ -87,7 +83,7 @@ export default function EditorPage() {
 
   return (
     <main className="min-h-screen bg-canvas">
-      {/* Hidden high-resolution PDF source */}
+      {/* Hidden PDF source - required for PDF generation */}
       <PrintRoot />
 
       {/* Top navigation */}
@@ -134,14 +130,6 @@ export default function EditorPage() {
 
             <button
               type="button"
-              onClick={handlePrint}
-              className="btn btn-ghost hidden sm:inline-flex"
-            >
-              Print
-            </button>
-
-            <button
-              type="button"
               onClick={handleDownloadPdf}
               disabled={isDownloading}
               className="btn btn-primary inline-flex items-center gap-2"
@@ -169,6 +157,7 @@ export default function EditorPage() {
       <div className="no-print">
         <div className="mx-auto max-w-[1600px]">
           <div className="grid min-h-[calc(100vh-4rem)] grid-cols-1 lg:grid-cols-[minmax(340px,1fr)_minmax(500px,794px)]">
+
             {/* LEFT EDITOR */}
             <aside className="border-r border-line bg-white">
               <div className="sticky top-16 max-h-[calc(100vh-4rem)] overflow-y-auto">
@@ -291,22 +280,14 @@ export default function EditorPage() {
         </div>
       </div>
 
-      {/* Mobile download bar */}
+      {/* Mobile download bar - no Print button */}
       <div className="no-print fixed bottom-0 left-0 right-0 z-40 border-t border-line bg-white p-3 shadow-lg lg:hidden">
         <div className="flex gap-2">
           <button
             type="button"
-            onClick={handlePrint}
-            className="btn btn-ghost flex-1"
-          >
-            Print
-          </button>
-
-          <button
-            type="button"
             onClick={handleDownloadPdf}
             disabled={isDownloading}
-            className="btn btn-primary flex-[2]"
+            className="btn btn-primary w-full"
           >
             {isDownloading
               ? "Creating PDF..."
