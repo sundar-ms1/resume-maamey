@@ -1,4 +1,5 @@
 
+
 import type { Metadata } from "next";
 import Script from "next/script";
 import Link from "next/link";
@@ -67,7 +68,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: "google6892558ecfa363b8.html",
+    google: "khJZj_QltCDOGnCk9OxXFy9M5TCFwYwpnbSl6WtPUGQ",
   },
 };
 
