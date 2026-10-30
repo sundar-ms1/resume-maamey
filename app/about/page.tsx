@@ -3,7 +3,7 @@ import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
 
 export const metadata: Metadata = {
-  title: "About Us | Resume Maamey",
+  title: "About Resume Maamey",
   description: "Learn more about Resume Maamey and our mission to provide free, high-quality resume building tools.",
   alternates: { canonical: "/about" },
 };

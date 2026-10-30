@@ -2,7 +2,7 @@
 import { SiteHeader } from "@/components/SiteHeader";
 
 export const metadata: Metadata = {
-  title: "Contact Us | Resume Maamey",
+  title: "Contact Resume Maamey",
   description:
     "Contact Resume Maamey for resume builder support, feedback, inquiries, or template suggestions.",
   alternates: { canonical: "/contact" },
@@ -58,5 +58,3 @@ export default function ContactPage() {
     </>
   );
 }
-
-

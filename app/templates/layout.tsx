@@ -3,14 +3,14 @@ import type { Metadata } from "next";
 const SITE_URL = "https://www.resumemaamey.in";
 
 export const metadata: Metadata = {
-  title: "Resume Templates",
+  title: "Free Resume Templates",
   description:
     "Choose from professional, modern and ATS-friendly resume templates. Customize your resume online with Resume Maamey.",
   alternates: {
-    canonical: `${SITE_URL}/templates`,
+    canonical: "/templates",
   },
   openGraph: {
-    title: "Resume Templates | Resume Maamey",
+    title: "Free Resume Templates | Resume Maamey",
     description:
       "Choose from professional, modern and ATS-friendly resume templates and customize your resume online.",
     url: `${SITE_URL}/templates`,

@@ -4,7 +4,7 @@ import { GUIDES } from "@/lib/guidesData";
 import { SiteHeader } from "@/components/SiteHeader";
 
 export const metadata: Metadata = {
-  title: "Career & Resume Writing Guides | Resume Maamey",
+  title: "Career & Resume Writing Guides",
   description: "Explore practical, original guides on resume structure, fresher resumes, action verbs and career changes.",
   alternates: { canonical: "/guides" },
 };
@@ -57,4 +57,3 @@ export default function GuidesPage() {
     </>
   );
 }
-

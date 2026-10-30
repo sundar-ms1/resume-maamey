@@ -1,11 +1,16 @@
-import { MetadataRoute } from 'next';
+import type { MetadataRoute } from "next";
+
+const SITE_URL = "https://www.resumemaamey.in";
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: {
-      userAgent: '*',
-      allow: '/',
-    },
-    sitemap: 'https://www.resumemaamey.in/sitemap.xml'
+    rules: [
+      {
+        userAgent: "*",
+        allow: "/",
+      },
+    ],
+    sitemap: `${SITE_URL}/sitemap.xml`,
+    host: SITE_URL,
   };
 }

@@ -1,9 +1,9 @@
-﻿import type { Metadata } from 'next';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { SiteHeader } from "@/components/SiteHeader";
 
 export const metadata: Metadata = {
-  title: 'Terms of Service â€” Resume Maamey',
+  title: "Terms of Service",
   description: 'Terms and conditions for using Resume Maamey.',
   alternates: { canonical: '/terms' },
 };
@@ -68,4 +68,3 @@ export default function TermsPage() {
     </>
   );
 }
-

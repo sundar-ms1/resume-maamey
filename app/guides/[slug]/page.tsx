@@ -16,10 +16,10 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const guide = GUIDES.find((g) => g.slug === params.slug);
-  if (!guide) return { title: "Guide Not Found" };
+  if (!guide) return { title: "Guide Not Found", robots: { index: false, follow: true } };
 
   return {
-    title: `${guide.title} | Resume Maamey`,
+    title: guide.title,
     description: guide.description,
     alternates: { canonical: `/guides/${guide.slug}` },
   };
@@ -97,4 +97,3 @@ export default function GuideDetailPage({ params }: Props) {
     </>
   );
 }
-

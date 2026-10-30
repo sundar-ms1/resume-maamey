@@ -3,7 +3,7 @@ import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Resume Maamey",
+  title: "Privacy Policy",
   description:
     "Read how Resume Maamey handles resume information, website analytics, cookies and advertising technologies.",
   alternates: { canonical: "/privacy" },
@@ -66,4 +66,3 @@ export default function PrivacyPage() {
     </>
   );
 }
-
