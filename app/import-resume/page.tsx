@@ -85,6 +85,8 @@ export default function ImportResumePage() {
   }
 
   function applyImport() {
+    // The import and editor routes have separate layouts, so bridge the draft for this tab.
+    sessionStorage.setItem("resume-maamey-pending-import", JSON.stringify(draft));
     setData(draft);
     router.push("/editor");
   }
