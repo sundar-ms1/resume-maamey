@@ -81,6 +81,22 @@ export function ResumeProvider({ children }: { children: React.ReactNode }) {
     setDataRaw((prev) => withUrlTemplate(prev));
   }, []);
 
+  // Restore a resume parsed on /import-resume before the editor first renders.
+  useEffect(() => {
+    try {
+      const pending = sessionStorage.getItem('resume-maamey-pending-import');
+      if (!pending) return;
+      const parsed = JSON.parse(pending) as ResumeData;
+      if (parsed && parsed.basics && Array.isArray(parsed.experience)) {
+        setDataRaw((prev) => ({ ...prev, ...parsed, design: { ...prev.design, ...parsed.design } }));
+        sessionStorage.removeItem('resume-maamey-pending-import');
+      }
+    } catch (error) {
+      console.error('Could not restore imported resume:', error);
+      sessionStorage.removeItem('resume-maamey-pending-import');
+    }
+  }, []);
+
   const commit = useCallback((updater: (prev: ResumeData) => ResumeData) => {
     setDataRaw((prev) => {
       past.current = [...past.current.slice(-49), prev];
