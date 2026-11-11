@@ -1,16 +1,17 @@
-'use client';
+"use client";
 
-import dynamic from 'next/dynamic';
-import { useState } from 'react';
-import Link from 'next/link';
-import { NavLink } from '@/components/NavLink';
-import { SiteHeader } from '@/components/SiteHeader';
-import { TEMPLATES, TEMPLATE_CATEGORIES } from '@/lib/templates';
-import { SAMPLE_RESUME } from '@/lib/sampleData';
+import dynamic from "next/dynamic";
+import Link from "next/link";
+import { useState } from "react";
+
+import { NavLink } from "@/components/NavLink";
+import { SiteHeader } from "@/components/SiteHeader";
+import { TEMPLATES, TEMPLATE_CATEGORIES } from "@/lib/templates";
+import { SAMPLE_RESUME } from "@/lib/sampleData";
 
 const TemplateThumb = dynamic(
   () =>
-    import('@/components/TemplateThumb').then(
+    import("@/components/TemplateThumb").then(
       (mod) => mod.TemplateThumb
     ),
   {
@@ -20,7 +21,7 @@ const TemplateThumb = dynamic(
         aria-hidden="true"
         className="flex h-[350px] w-[250px] items-center justify-center bg-gradient-to-br from-slate-100 via-white to-slate-200"
       >
-        <div className="h-[280px] w-[210px] animate-pulse rounded-sm border border-slate-200 bg-white shadow-sm">
+        <div className="h-[280px] w-[210px] rounded-sm border border-slate-200 bg-white shadow-sm">
           <div className="mx-5 mt-6 h-3 w-24 rounded bg-slate-200" />
           <div className="mx-5 mt-3 h-2 w-32 rounded bg-slate-100" />
 
@@ -43,226 +44,303 @@ const TemplateThumb = dynamic(
   }
 );
 
-export default function TemplatesPage() {
-  const [cat, setCat] = useState<string>('All');
+/*
+ * Keep the exact ResumeData structure already used by the project.
+ *
+ * We only change existing fields that are already present in
+ * SAMPLE_RESUME. We do NOT invent properties such as:
+ * position, highlights, keywords, etc.
+ */
+const TEMPLATE_PREVIEW_DATA = {
+  ...SAMPLE_RESUME,
 
-  const list =
-    cat === 'All'
+  basics: {
+    ...SAMPLE_RESUME.basics,
+    name: "Alex Morgan",
+    label: "Software Professional",
+    email: "alex@example.com",
+    phone: "+91 90000 00000",
+    location: "Chennai, India",
+    summary:
+      "Results-focused professional with experience delivering reliable digital solutions and measurable results.",
+  },
+
+  experience: SAMPLE_RESUME.experience.slice(0, 2),
+
+  certifications: SAMPLE_RESUME.certifications.slice(0, 1),
+
+  achievements: SAMPLE_RESUME.achievements.slice(0, 1),
+
+  education: SAMPLE_RESUME.education.slice(0, 1),
+
+  skills: SAMPLE_RESUME.skills.slice(0, 3),
+
+  projects: SAMPLE_RESUME.projects.slice(0, 1),
+
+  sectionTitles: {
+    ...SAMPLE_RESUME.sectionTitles,
+  },
+};
+
+export default function TemplatesPage() {
+  const [activeCategory, setActiveCategory] = useState("All");
+
+  const filteredTemplates =
+    activeCategory === "All"
       ? TEMPLATES
-      : TEMPLATES.filter((t) => t.category === cat);
+      : TEMPLATES.filter(
+          (template) => template.category === activeCategory
+        );
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-slate-50">
       <SiteHeader />
 
-      <main>
-        {/* Hero / SEO content */}
-        <section className="border-b border-line bg-white">
-          <div className="mx-auto max-w-6xl px-5 py-12 sm:py-14">
-            <div className="max-w-3xl">
-              <div className="mb-4 inline-flex items-center rounded-full border border-line bg-canvas px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em] text-ink-500">
-                Resume template gallery
-              </div>
-
-              <h1 className="text-[2rem] font-extrabold tracking-[-0.03em] text-ink sm:text-[2.6rem]">
-                {TEMPLATES.length} resume templates
-              </h1>
-
-              <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-ink-500">
-                Choose a professional resume layout designed for different
-                career needs. Use an ATS-friendly single-column format,
-                a modern sidebar design, or a polished editorial style.
-                Start with a template and switch designs later without
-                losing your resume content.
-              </p>
+      {/* Hero */}
+      <section className="border-b border-slate-200 bg-white">
+        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-3xl text-center">
+            <div className="mb-4 inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-700">
+              Free professional resume templates
             </div>
 
-            {/* Category filters */}
-            <div
-              className="mt-7 flex flex-wrap gap-2"
-              aria-label="Resume template categories"
-            >
-              {TEMPLATE_CATEGORIES.map((category) => {
-                const count =
-                  category === 'All'
-                    ? TEMPLATES.length
-                    : TEMPLATES.filter(
-                        (template) =>
-                          template.category === category
-                      ).length;
+            <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
+              {TEMPLATES.length} resume templates
+            </h1>
 
-                const active = cat === category;
+            <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-slate-600">
+              Choose a professional resume design, customize your content,
+              and create a polished resume that is ready for job applications.
+            </p>
 
-                return (
-                  <button
-                    key={category}
-                    type="button"
-                    onClick={() => setCat(category)}
-                    aria-pressed={active}
-                    className={`rounded-full px-3.5 py-1.5 text-[13px] font-semibold transition ${
-                      active
-                        ? 'bg-ink text-white'
-                        : 'border border-line bg-white text-ink-500 hover:border-ink-300 hover:text-ink'
-                    }`}
-                  >
-                    {category}
-                    <span className="ml-1.5 text-[11px] opacity-60">
-                      {count}
-                    </span>
-                  </button>
-                );
-              })}
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+              <NavLink to="editor">
+                Create your resume
+              </NavLink>
+
+              <Link
+                href="/guides"
+                className="rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:bg-slate-50"
+              >
+                Resume guides
+              </Link>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
+
+      {/* Main */}
+      <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        {/* Category filters */}
+        <div className="mb-10">
+          <div className="flex flex-wrap justify-center gap-2">
+            <button
+              type="button"
+              onClick={() => setActiveCategory("All")}
+              className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+                activeCategory === "All"
+                  ? "bg-slate-900 text-white"
+                  : "border border-slate-300 bg-white text-slate-700 hover:border-slate-400"
+              }`}
+            >
+              All templates
+            </button>
+
+            {TEMPLATE_CATEGORIES.map((category) => (
+              <button
+                key={category}
+                type="button"
+                onClick={() => setActiveCategory(category)}
+                className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+                  activeCategory === category
+                    ? "bg-slate-900 text-white"
+                    : "border border-slate-300 bg-white text-slate-700 hover:border-slate-400"
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Template count */}
+        <div className="mb-6 flex items-center justify-between">
+          <div>
+            <h2 className="text-2xl font-bold text-slate-900">
+              Choose your design
+            </h2>
+
+            <p className="mt-1 text-sm text-slate-600">
+              {filteredTemplates.length} template
+              {filteredTemplates.length === 1 ? "" : "s"} available
+            </p>
+          </div>
+        </div>
 
         {/* Template gallery */}
-        <section
-          aria-label="Resume templates"
-          className="mx-auto max-w-6xl px-5 py-12"
-        >
-          <div className="mb-7 flex items-end justify-between gap-4">
-            <div>
-              <h2 className="text-xl font-extrabold tracking-tight text-ink">
-                Choose your starting design
-              </h2>
-
-              <p className="mt-1 text-sm text-ink-500">
-                Preview a template, then open it in the free resume editor.
-              </p>
-            </div>
-
-            <span className="hidden text-xs font-semibold text-ink-300 sm:block">
-              {list.length} template{list.length === 1 ? '' : 's'}
-            </span>
-          </div>
-
-          <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
-            {list.map((template) => (
-              <article
-                key={template.id}
-                className="card group overflow-hidden transition hover:-translate-y-0.5 hover:shadow-panel"
-              >
-                {/* Visual preview is intentionally client-rendered.
-                    This keeps the initial HTML lightweight and avoids
-                    repeating the full sample resume text for every card. */}
-                <div
-                  className="relative overflow-hidden border-b border-line bg-canvas"
-                  aria-label={`${template.name} resume template preview`}
-                >
-                  <div className="mx-auto w-fit">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {filteredTemplates.map((template) => (
+            <article
+              key={template.id}
+              className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-xl"
+            >
+              {/* Preview */}
+              <div className="relative overflow-hidden border-b border-slate-200 bg-slate-100">
+                <div className="flex justify-center p-4">
+                  <div className="overflow-hidden rounded-md border border-slate-200 bg-white shadow-md">
                     <TemplateThumb
                       template={template}
-                      data={SAMPLE_RESUME}
-                      width={250}
+                      data={TEMPLATE_PREVIEW_DATA}
                     />
                   </div>
-
-                  <NavLink
-                    to="editor"
-                    query={`t=${template.id}`}
-                    className="absolute inset-0 flex items-center justify-center bg-ink/55 opacity-0 transition group-hover:opacity-100 focus-within:opacity-100"
-                  >
-                    <span className="btn bg-white text-ink">
-                      Use this template
-                    </span>
-                  </NavLink>
                 </div>
 
-                {/* Crawlable, useful template information */}
-                <div className="flex min-h-[58px] items-center justify-between gap-2 px-3 py-2.5">
-                  <div className="min-w-0">
-                    <h3 className="truncate text-[13px] font-bold text-ink">
+                {/* Hover CTA */}
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 flex translate-y-full justify-center bg-gradient-to-t from-slate-950/80 via-slate-950/40 to-transparent px-4 pb-4 pt-10 transition-transform duration-200 group-hover:translate-y-0">
+                  <NavLink
+                    to="editor"
+                    query={`template=${template.id}`}
+                  >
+                    Use this template
+                  </NavLink>
+                </div>
+              </div>
+
+              {/* Template information */}
+              <div className="p-5">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <h3 className="text-lg font-bold text-slate-900">
                       {template.name}
                     </h3>
 
-                    <p className="mt-0.5 text-[11px] leading-tight text-ink-400">
-                      Professional resume layout
+                    <p className="mt-1 text-sm text-slate-500">
+                      {template.category}
                     </p>
                   </div>
 
-                  <span className="flex shrink-0 items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.06em] text-ink-300">
-                    <span
-                      className="h-2.5 w-2.5 rounded-full"
-                      style={{ background: template.accent }}
-                      aria-hidden="true"
-                    />
-                    {template.category}
+                  <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-600">
+                    Free
                   </span>
                 </div>
-              </article>
-            ))}
+
+                <Link
+                  href={`/editor?template=${template.id}`}
+                  className="mt-4 inline-flex text-sm font-semibold text-blue-600 hover:text-blue-700"
+                >
+                  Customize template →
+                </Link>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        {/* Helpful content */}
+        <section className="mt-20">
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 className="text-3xl font-bold tracking-tight text-slate-900">
+              Pick a resume style that fits your career
+            </h2>
+
+            <p className="mt-4 text-base leading-7 text-slate-600">
+              Resume Maamey gives you multiple professional layouts so you
+              can focus on your experience, skills, education, and
+              achievements instead of spending hours formatting a document.
+            </p>
+          </div>
+
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
+                ✓
+              </div>
+
+              <h3 className="text-lg font-bold text-slate-900">
+                ATS-friendly options
+              </h3>
+
+              <p className="mt-2 text-sm leading-6 text-slate-600">
+                Choose clean layouts that keep important resume information
+                easy to read and organize.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-purple-50 text-purple-700">
+                ✦
+              </div>
+
+              <h3 className="text-lg font-bold text-slate-900">
+                Modern professional designs
+              </h3>
+
+              <p className="mt-2 text-sm leading-6 text-slate-600">
+                Select a visual style that works for fresh graduates,
+                experienced professionals, career changes, and different
+                industries.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700">
+                ↻
+              </div>
+
+              <h3 className="text-lg font-bold text-slate-900">
+                Change templates anytime
+              </h3>
+
+              <p className="mt-2 text-sm leading-6 text-slate-600">
+                Your resume content can be used with different designs, so
+                you can compare layouts before downloading your final resume.
+              </p>
+            </div>
           </div>
         </section>
 
-        {/* Helpful content */}
-        <section className="border-t border-line bg-canvas">
-          <div className="mx-auto max-w-6xl px-5 py-12 sm:py-14">
-            <div className="grid gap-6 md:grid-cols-3">
-              <div className="rounded-2xl border border-line bg-white p-6">
-                <h2 className="text-base font-extrabold text-ink">
-                  ATS-friendly options
-                </h2>
-                <p className="mt-2 text-sm leading-relaxed text-ink-500">
-                  Start with a clean layout when you want your education,
-                  experience, skills, and achievements to remain easy for
-                  applicant tracking systems to read.
-                </p>
-              </div>
+        {/* Guide section */}
+        <section className="mt-16 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm sm:p-10">
+          <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-center">
+            <div>
+              <p className="text-sm font-bold uppercase tracking-wide text-blue-600">
+                Resume help
+              </p>
 
-              <div className="rounded-2xl border border-line bg-white p-6">
-                <h2 className="text-base font-extrabold text-ink">
-                  Modern professional designs
-                </h2>
-                <p className="mt-2 text-sm leading-relaxed text-ink-500">
-                  Choose a contemporary layout when visual hierarchy,
-                  section spacing, and a polished presentation matter for
-                  your target role.
-                </p>
-              </div>
+              <h2 className="mt-2 text-2xl font-bold text-slate-900">
+                Not sure how to improve your resume?
+              </h2>
 
-              <div className="rounded-2xl border border-line bg-white p-6">
-                <h2 className="text-base font-extrabold text-ink">
-                  Change templates anytime
-                </h2>
-                <p className="mt-2 text-sm leading-relaxed text-ink-500">
-                  Your resume content is separate from the visual template,
-                  so you can experiment with different designs before
-                  downloading your final resume.
-                </p>
-              </div>
+              <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600">
+                Read our practical resume guides for ATS optimization,
+                stronger action verbs, fresher resumes, and other job-search
+                tips.
+              </p>
             </div>
+
+            <Link
+              href="/guides"
+              className="inline-flex items-center justify-center rounded-lg bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
+            >
+              Read resume guides →
+            </Link>
           </div>
         </section>
 
         {/* Final CTA */}
-        <section className="border-t border-line bg-white">
-          <div className="mx-auto max-w-6xl px-5 py-12 text-center">
-            <h2 className="text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">
-              Ready to build your resume?
-            </h2>
+        <section className="mt-16 overflow-hidden rounded-3xl bg-slate-900 px-6 py-12 text-center text-white sm:px-10">
+          <h2 className="text-3xl font-bold">
+            Ready to build your resume?
+          </h2>
 
-            <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-ink-500">
-              Pick a design and continue to the Resume Maamey editor.
-              You can customize your content, change the design, and
-              prepare your resume for download.
-            </p>
+          <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-slate-300">
+            Choose a template, add your information, preview your resume,
+            and download your finished document.
+          </p>
 
-            <div className="mt-6 flex flex-wrap justify-center gap-3">
-              <NavLink
-                to="editor"
-                className="btn bg-ink px-5 py-2.5 text-white hover:bg-ink-700"
-              >
-                Create my resume
-              </NavLink>
-
-              <Link
-  href="/guides"
-  className="btn border border-line bg-white px-5 py-2.5 text-ink hover:border-ink-300"
->
-  Read resume guides
-</Link>
-            </div>
+          <div className="mt-7">
+            <NavLink to="editor">
+              Start building your resume
+            </NavLink>
           </div>
         </section>
       </main>
