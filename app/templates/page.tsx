@@ -45,11 +45,11 @@ const TemplateThumb = dynamic(
 );
 
 /*
- * Keep the exact ResumeData structure already used by the project.
+ * The template preview only needs a small amount of resume content.
  *
- * We only change existing fields that are already present in
- * SAMPLE_RESUME. We do NOT invent properties such as:
- * position, highlights, keywords, etc.
+ * We keep the real ResumeData structure used by the application,
+ * but intentionally reduce the amount of sample content rendered
+ * inside the gallery.
  */
 const TEMPLATE_PREVIEW_DATA = {
   ...SAMPLE_RESUME,
@@ -65,22 +65,46 @@ const TEMPLATE_PREVIEW_DATA = {
       "Results-focused professional with experience delivering reliable digital solutions and measurable results.",
   },
 
-  experience: SAMPLE_RESUME.experience.slice(0, 2),
-
+  experience: SAMPLE_RESUME.experience.slice(0, 1),
   certifications: SAMPLE_RESUME.certifications.slice(0, 1),
-
   achievements: SAMPLE_RESUME.achievements.slice(0, 1),
-
   education: SAMPLE_RESUME.education.slice(0, 1),
-
-  skills: SAMPLE_RESUME.skills.slice(0, 3),
-
+  skills: SAMPLE_RESUME.skills.slice(0, 2),
   projects: SAMPLE_RESUME.projects.slice(0, 1),
 
   sectionTitles: {
     ...SAMPLE_RESUME.sectionTitles,
   },
 };
+
+const TEMPLATE_DESCRIPTIONS: Record<string, string> = {
+  professional:
+    "A polished layout for experienced professionals, office roles, and corporate applications.",
+
+  modern:
+    "A clean contemporary design with strong visual hierarchy for modern job applications.",
+
+  creative:
+    "A distinctive layout for creative professionals who want their resume to stand out.",
+
+  minimal:
+    "A simple, focused design that keeps attention on your experience, skills, and achievements.",
+
+  academic:
+    "A structured resume style suited to students, graduates, researchers, and academic applications.",
+
+  tech:
+    "A technology-focused layout designed to highlight technical skills, projects, and experience.",
+};
+
+function getTemplateDescription(category: string): string {
+  const normalizedCategory = category.toLowerCase();
+
+  return (
+    TEMPLATE_DESCRIPTIONS[normalizedCategory] ??
+    "A professional resume layout designed to keep your experience, skills, and achievements easy to read."
+  );
+}
 
 export default function TemplatesPage() {
   const [activeCategory, setActiveCategory] = useState("All");
@@ -214,7 +238,7 @@ export default function TemplatesPage() {
                       {template.name}
                     </h3>
 
-                    <p className="mt-1 text-sm text-slate-500">
+                    <p className="mt-1 text-sm font-medium text-blue-600">
                       {template.category}
                     </p>
                   </div>
@@ -224,11 +248,15 @@ export default function TemplatesPage() {
                   </span>
                 </div>
 
+                <p className="mt-3 text-sm leading-6 text-slate-600">
+                  {getTemplateDescription(template.category)}
+                </p>
+
                 <Link
                   href={`/editor?template=${template.id}`}
                   className="mt-4 inline-flex text-sm font-semibold text-blue-600 hover:text-blue-700"
                 >
-                  Customize template →
+                  Customize template &rarr;
                 </Link>
               </div>
             </article>
@@ -251,8 +279,11 @@ export default function TemplatesPage() {
 
           <div className="mt-10 grid gap-6 md:grid-cols-3">
             <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
-                ✓
+              <div
+                aria-hidden="true"
+                className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-700"
+              >
+                &#10003;
               </div>
 
               <h3 className="text-lg font-bold text-slate-900">
@@ -266,8 +297,11 @@ export default function TemplatesPage() {
             </div>
 
             <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-purple-50 text-purple-700">
-                ✦
+              <div
+                aria-hidden="true"
+                className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-purple-50 text-purple-700"
+              >
+                &#10022;
               </div>
 
               <h3 className="text-lg font-bold text-slate-900">
@@ -282,8 +316,11 @@ export default function TemplatesPage() {
             </div>
 
             <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700">
-                ↻
+              <div
+                aria-hidden="true"
+                className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700"
+              >
+                &#8635;
               </div>
 
               <h3 className="text-lg font-bold text-slate-900">
@@ -321,7 +358,7 @@ export default function TemplatesPage() {
               href="/guides"
               className="inline-flex items-center justify-center rounded-lg bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
             >
-              Read resume guides →
+              Read resume guides &rarr;
             </Link>
           </div>
         </section>
