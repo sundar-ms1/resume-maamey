@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,9 +7,15 @@
   --font-ui: 'Figtree', ui-sans-serif, system-ui, sans-serif;
 }
 
-* { -webkit-font-smoothing: antialiased; }
+* {
+  -webkit-font-smoothing: antialiased;
+}
 
-html, body { height: 100%; }
+html,
+body {
+  height: 100%;
+}
+
 body {
   background: #f4f4f7;
   color: #12121a;
@@ -23,7 +30,9 @@ body {
 }
 
 .rm-page-shadow > .rm-page {
-  box-shadow: 0 1px 2px rgba(18, 18, 26, 0.07), 0 18px 46px -14px rgba(18, 18, 26, 0.28);
+  box-shadow:
+    0 1px 2px rgba(18, 18, 26, 0.07),
+    0 18px 46px -14px rgba(18, 18, 26, 0.28);
   border-radius: 2px;
 }
 
@@ -31,6 +40,7 @@ body {
   border-top: 1px dashed #9aa0b4;
   pointer-events: none;
 }
+
 .rm-break span {
   position: absolute;
   right: 100%;
@@ -47,85 +57,82 @@ body {
 }
 
 @media (max-width: 1023px) {
-  .rm-break span { display: none; }
+  .rm-break span {
+    display: none;
+  }
 }
 
 .field-label {
   @apply block text-[11px] font-semibold uppercase tracking-[0.07em] text-ink-500 mb-1;
 }
+
 .field {
   @apply w-full rounded-lg border border-line bg-white px-3 py-2 text-[13px] text-ink outline-none transition;
 }
+
 .field:focus {
   @apply border-brand ring-2 ring-brand/15;
 }
-textarea.field { @apply leading-relaxed; }
+
+textarea.field {
+  @apply leading-relaxed;
+}
 
 .btn {
   @apply inline-flex items-center justify-center gap-2 rounded-lg px-3.5 py-2 text-[13px] font-semibold transition select-none;
 }
-.btn-primary { @apply bg-brand text-white hover:bg-brand-dark; }
-.btn-ghost { @apply border border-line bg-white text-ink-700 hover:border-ink-300 hover:bg-canvas; }
-.btn-quiet { @apply text-ink-500 hover:text-ink hover:bg-canvas; }
-.btn:disabled { @apply opacity-40 pointer-events-none; }
+
+.btn-primary {
+  @apply bg-brand text-white hover:bg-brand-dark;
+}
+
+.btn-ghost {
+  @apply border border-line bg-white text-ink-700 hover:border-ink-300 hover:bg-canvas;
+}
+
+.btn-quiet {
+  @apply text-ink-500 hover:text-ink hover:bg-canvas;
+}
+
+.btn:disabled {
+  @apply opacity-40 pointer-events-none;
+}
 
 .tab {
   @apply flex flex-col items-center gap-1 rounded-lg px-2 py-2.5 text-[10.5px] font-semibold text-ink-500 transition;
 }
-.tab[data-active='true'] { @apply bg-brand-light text-brand-dark; }
-.tab:hover { @apply bg-canvas text-ink; }
 
-.card { @apply rounded-xl2 border border-line bg-white; }
-
-::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-thumb { background: #d6d6e0; border-radius: 10px; border: 2px solid transparent; background-clip: content-box; }
-::-webkit-scrollbar-thumb:hover { background: #bcbcca; background-clip: content-box; }
-
-/* ---------- printing ---------- */
-
-.rm-print-only { display: none; }
-
-.rm-page, .rm-page * {
-  -webkit-print-color-adjust: exact;
-  print-color-adjust: exact;
-}
-.rm-item { break-inside: avoid; page-break-inside: avoid; }
-.rm-section { break-inside: auto; }
-
-@page {
-  size: A4;
-  margin: 0;
+.tab[data-active='true'] {
+  @apply bg-brand-light text-brand-dark;
 }
 
-@media print {
-  html, body {
-    background: #fff !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    height: auto !important;
-  }
-  body > *:not(.rm-print-only) { display: none !important; }
-  .rm-print-only { display: block !important; }
-  .rm-print-only .rm-page {
-    width: 210mm !important;
-    /* a hair under A4 so a rounded pixel never spills onto a blank extra page */
-    min-height: 296mm !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
-    margin: 0 !important;
-    overflow: visible !important;
-    transform: none !important;
-  }
-  .rm-break { display: none !important; }
+.tab:hover {
+  @apply bg-canvas text-ink;
 }
 
-@media print {
-  /* trailing space must never push a blank page */
-  .rm-print-only .rm-section:last-child { margin-bottom: 0 !important; }
-  .rm-print-only main, .rm-print-only aside { padding-bottom: 14px !important; }
+.card {
+  @apply rounded-xl2 border border-line bg-white;
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d6d6e0;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #bcbcca;
+  background-clip: content-box;
+}
+
 /* =========================================================
-   RESUME PDF EXPORT
+   RESUME PDF SOURCE
    ========================================================= */
 
 .resume-pdf-root {
@@ -169,7 +176,7 @@ textarea.field { @apply leading-relaxed; }
   overflow: visible;
 }
 
-/* Don't allow the editor's preview scaling to affect PDF */
+/* Prevent editor preview scaling from affecting PDF source. */
 
 .resume-pdf-root * {
   transform-origin: top left;
@@ -187,7 +194,7 @@ textarea.field { @apply leading-relaxed; }
   max-width: 100%;
 }
 
-/* Don't show editor-only controls inside the PDF */
+/* Hide editor-only controls inside PDF. */
 
 .resume-pdf-root .no-pdf,
 .resume-pdf-root .pdf-hidden,
@@ -195,21 +202,13 @@ textarea.field { @apply leading-relaxed; }
   display: none !important;
 }
 
-/* Keep resume blocks together where possible */
-
-.resume-pdf-root section,
-.resume-pdf-root article {
-  break-inside: avoid;
-  page-break-inside: avoid;
-}
-
-/* Links should remain readable */
+/* Links should remain readable. */
 
 .resume-pdf-root a {
   text-decoration: none;
 }
 
-/* Prevent selection/caret artifacts */
+/* Prevent selection/caret artifacts. */
 
 .resume-pdf-root [contenteditable="true"] {
   outline: none !important;
@@ -217,40 +216,101 @@ textarea.field { @apply leading-relaxed; }
 }
 
 /* =========================================================
-   PRINT
+   RESUME PRINT STYLES
+   Native browser A4 pagination
+   ========================================================= */
+
+.rm-print-only {
+  display: none;
+}
+
+.rm-page,
+.rm-page * {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/*
+ * Keep individual resume entries together wherever possible.
+ * Long sections are allowed to continue onto another page.
+ */
+
+.rm-item {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.rm-section {
+  break-inside: auto;
+}
+
+/* Keep section headings with their following content. */
+
+.rm-section > h2 {
+  break-after: avoid;
+  page-break-after: avoid;
+}
+
+/* =========================================================
+   BROWSER PRINT
    ========================================================= */
 
 @media print {
+
   @page {
-    size: A4;
+    size: A4 portrait;
     margin: 0;
   }
 
   html,
   body {
-    width: 210mm;
+    width: auto !important;
+    min-width: 0 !important;
+
+    height: auto !important;
+
     margin: 0 !important;
     padding: 0 !important;
+
+    overflow: visible !important;
+
     background: #ffffff !important;
   }
+
+  /*
+   * Hide the editor interface.
+   * PrintRoot is portalled directly under document.body.
+   */
 
   body > * {
     display: none !important;
   }
 
-  body > .resume-pdf-root {
+  body > #resume-pdf-root {
     display: block !important;
 
     position: static !important;
 
-    width: 210mm !important;
-    min-width: 210mm !important;
-    max-width: 210mm !important;
+    left: auto !important;
+    top: auto !important;
+
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+
+    height: auto !important;
 
     margin: 0 !important;
     padding: 0 !important;
 
     opacity: 1 !important;
+    visibility: visible !important;
+
+    overflow: visible !important;
+
+    z-index: auto !important;
+
+    pointer-events: auto !important;
 
     transform: none !important;
     zoom: 1 !important;
@@ -258,54 +318,293 @@ textarea.field { @apply leading-relaxed; }
     background: #ffffff !important;
   }
 
-  .resume-pdf-page {
-    width: 210mm !important;
-    min-height: 297mm !important;
-    max-width: 210mm !important;
+  #resume-pdf-root * {
+    visibility: visible !important;
+  }
+
+  /*
+   * Do not force each resume page to be one fixed-height block.
+   * Let Chrome paginate the document naturally.
+   */
+
+  #resume-pdf-root .resume-pdf-page {
+    display: block !important;
+
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+
+    height: auto !important;
+    min-height: 0 !important;
 
     margin: 0 !important;
     padding: 0 !important;
 
+    overflow: visible !important;
+
+    box-shadow: none !important;
+
     transform: none !important;
     zoom: 1 !important;
 
-    box-shadow: none !important;
+    background: #ffffff !important;
   }
 
-  .no-print {
+  /*
+   * Important:
+   * Remove the fixed A4 height restriction and overflow:hidden
+   * from ResumeDocument during printing.
+   */
+
+  #resume-pdf-root .rm-page {
+    display: block !important;
+
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+
+    height: auto !important;
+    min-height: 0 !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    border-radius: 0 !important;
+
+    box-shadow: none !important;
+
+    overflow: visible !important;
+
+    transform: none !important;
+    zoom: 1 !important;
+
+    background: #ffffff !important;
+  }
+
+  /*
+   * Preserve the existing template's internal layout.
+   * Sidebar and two-column layouts are not reconstructed.
+   */
+
+  #resume-pdf-root section,
+  #resume-pdf-root article {
+    break-inside: auto;
+    page-break-inside: auto;
+  }
+
+  #resume-pdf-root .rm-item {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  #resume-pdf-root .rm-section > h2 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  /*
+   * Hide editor-only elements.
+   */
+
+  #resume-pdf-root .rm-break,
+  #resume-pdf-root .no-print,
+  #resume-pdf-root .no-pdf,
+  #resume-pdf-root .pdf-hidden,
+  #resume-pdf-root button {
     display: none !important;
   }
+
+  /*
+   * Keep project links and long text readable.
+   */
+
+  #resume-pdf-root a {
+    text-decoration: none !important;
+    overflow-wrap: anywhere;
+  }
+
+  #resume-pdf-root img {
+    max-width: 100% !important;
+  }
+
+  #resume-pdf-root svg {
+    max-width: 100% !important;
+  }
+
+  #resume-pdf-root [contenteditable="true"] {
+    outline: none !important;
+    caret-color: transparent !important;
+  }
+
+  /*
+   * Prevent text clipping caused by insufficient line space.
+   */
+
+  #resume-pdf-root {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /*
+   * Preserve template background colours and graphics.
+   */
 
   * {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
 }
-@media print {
-  /* Hide headers, sidebars, buttons, editor controls, and footers */
-  body * {
-    visibility: hidden !important;
-  }
 
-  /* Only display the resume paper element */
-  #resume-pdf-root,
-  #resume-pdf-root * {
-    visibility: visible !important;
-  }
+/* =========================================================
+   PREMIUM HOMEPAGE SYSTEM
+   Scoped mostly to homepage utility classes so the editor UI
+   keeps its existing visual language.
+   ========================================================= */
 
-  #resume-pdf-root {
-    position: absolute !important;
-    left: 0 !important;
-    top: 0 !important;
-    width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    box-shadow: none !important;
-    background: transparent !important;
-  }
+.hero-orb {
+  position: absolute;
+  width: 34rem;
+  height: 34rem;
+  border-radius: 9999px;
+  filter: blur(90px);
+  pointer-events: none;
+  opacity: .22;
+}
 
-  @page {
-    size: A4 portrait;
-    margin: 0;
-  }
+.hero-orb-a { right: -12rem; top: -13rem; background: #6366f1; }
+.hero-orb-b { left: -15rem; bottom: -16rem; background: #06b6d4; opacity: .12; }
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .22;
+  background-image: linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(to bottom, black, transparent 78%);
+}
+
+.hero-gradient {
+  background: linear-gradient(90deg, #a5b4fc 0%, #67e8f9 48%, #f0abfc 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero-primary {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 55%, #0891b2 100%);
+  color: #fff;
+  box-shadow: 0 14px 35px rgba(79,70,229,.32);
+}
+.hero-primary:hover { filter: brightness(1.08); transform: translateY(-1px); }
+.hero-secondary {
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.055);
+  color: #fff;
+  backdrop-filter: blur(14px);
+}
+.hero-secondary:hover { background: rgba(255,255,255,.10); }
+
+.resume-stage { position: relative; }
+.resume-card-main { transition: transform .35s ease; }
+.resume-stage:hover .resume-card-main { transform: rotate(0deg) translateY(-3px); }
+.resume-card-float { transition: transform .35s ease; }
+.resume-stage:hover .resume-card-float { transform: rotate(2deg) translateY(-5px); }
+
+.section-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  color: #4f46e5;
+  font-size: .67rem;
+  font-weight: 900;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.section-kicker::before {
+  content: '';
+  width: 22px;
+  height: 3px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #6366f1, #22d3ee);
+}
+.section-kicker.dark { color: #a5b4fc; }
+
+.section-title {
+  max-width: 850px;
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  line-height: 1.03;
+  letter-spacing: -.045em;
+  font-weight: 900;
+}
+.section-title.dark { color: #fff; }
+.section-copy {
+  max-width: 720px;
+  font-size: .95rem;
+  line-height: 1.8;
+  color: #64748b;
+}
+
+.premium-card,
+.audience-card,
+.step-card,
+.guide-card {
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  border-radius: 22px;
+  box-shadow: 0 18px 55px rgba(15,23,42,.055);
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.premium-card:hover,
+.audience-card:hover,
+.step-card:hover,
+.guide-card:hover {
+  transform: translateY(-4px);
+  border-color: #c7d2fe;
+  box-shadow: 0 24px 65px rgba(79,70,229,.10);
+}
+
+.icon-tile {
+  display: flex;
+  width: 48px;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  background: linear-gradient(135deg, #eef2ff, #ecfeff);
+  color: #4f46e5;
+}
+
+.audience-card { padding: 1.5rem; }
+.step-card { padding: 1.5rem; min-height: 250px; }
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: #0b1021;
+  color: #a5b4fc;
+  font-size: .72rem;
+  font-weight: 900;
+  letter-spacing: .08em;
+}
+
+.template-tile { display: block; }
+.template-tile img { display: block; width: 100%; height: auto; }
+
+.guide-card { padding: 1.5rem; }
+
+.cta-panel {
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(circle at 15% 10%, rgba(99,102,241,.38), transparent 32%), radial-gradient(circle at 90% 80%, rgba(6,182,212,.28), transparent 34%), #0b1021;
+  box-shadow: 0 28px 80px rgba(15,23,42,.22);
+}
+
+@media (max-width: 640px) {
+  .hero-orb { width: 22rem; height: 22rem; filter: blur(70px); }
+  .resume-card-main { transform: rotate(-1deg) scale(.96); transform-origin: center; }
+  .resume-card-float { transform: rotate(3deg) scale(.82); transform-origin: bottom left; }
 }

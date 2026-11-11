@@ -1,8 +1,9 @@
 
-
 import type { Metadata } from "next";
 import Script from "next/script";
 import Link from "next/link";
+import { ResumeProvider } from "@/lib/store";
+import { GOOGLE_FONTS_HREF } from "@/lib/fonts";
 import "./globals.css";
 
 const SITE_URL = "https://www.resumemaamey.in";
@@ -97,6 +98,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Resume fonts (Design panel + templates) */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link rel="stylesheet" href={GOOGLE_FONTS_HREF} />
         <script
           id="resume-maamey-jsonld"
           type="application/ld+json"
@@ -138,7 +147,10 @@ export default function RootLayout({
           }}
         />
 
-        <div className="flex-1 flex flex-col">{children}</div>
+        {/* Resume context provider */}
+        <ResumeProvider>
+          <div className="flex-1 flex flex-col">{children}</div>
+        </ResumeProvider>
 
         {/* Global Footer */}
         <footer className="w-full bg-white border-t border-slate-200 py-10 px-4 sm:px-6 lg:px-8 mt-auto print:hidden">
@@ -154,40 +166,22 @@ export default function RootLayout({
             </div>
 
             <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-medium">
-              <Link
-                href="/guides"
-                className="hover:text-slate-900 transition-colors"
-              >
+              <Link href="/guides" className="hover:text-slate-900 transition-colors">
                 Guides
               </Link>
-              <Link
-                href="/templates"
-                className="hover:text-slate-900 transition-colors"
-              >
+              <Link href="/templates" className="hover:text-slate-900 transition-colors">
                 Templates
               </Link>
-              <Link
-                href="/about"
-                className="hover:text-slate-900 transition-colors"
-              >
+              <Link href="/about" className="hover:text-slate-900 transition-colors">
                 About Us
               </Link>
-              <Link
-                href="/contact"
-                className="hover:text-slate-900 transition-colors"
-              >
+              <Link href="/contact" className="hover:text-slate-900 transition-colors">
                 Contact Us
               </Link>
-              <Link
-                href="/privacy"
-                className="hover:text-slate-900 transition-colors"
-              >
+              <Link href="/privacy" className="hover:text-slate-900 transition-colors">
                 Privacy Policy
               </Link>
-              <Link
-                href="/terms"
-                className="hover:text-slate-900 transition-colors"
-              >
+              <Link href="/terms" className="hover:text-slate-900 transition-colors">
                 Terms of Service
               </Link>
             </nav>

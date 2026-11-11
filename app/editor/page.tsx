@@ -108,9 +108,17 @@ export default function EditorPage() {
           </Link>
 
           <div className="flex items-center gap-2">
-            <Link href="/import-resume" className="btn btn-ghost hidden sm:inline-flex">
-              Import old resume
+            <Link
+              href="/import-resume"
+              className="btn btn-ghost inline-flex items-center gap-1.5 text-xs sm:text-sm"
+              title="Import an old resume (PDF, Word, text or image)"
+            >
+              <span aria-hidden="true">↑</span>
+              <span>
+                Import<span className="hidden md:inline"> resume</span>
+              </span>
             </Link>
+
             <button
               type="button"
               onClick={undo}

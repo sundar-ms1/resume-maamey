@@ -67,8 +67,20 @@ function withUrlTemplate(base: ResumeData): ResumeData {
   };
 }
 
+const ARRAY_KEYS: ListKey[] = ['experience', 'education', 'projects', 'skills', 'certifications', 'languages', 'achievements'];
+
+function isResumeDraft(value: unknown): value is ResumeData {
+  if (!value || typeof value !== 'object') return false;
+  const draft = value as Partial<ResumeData>;
+  if (!draft.basics || typeof draft.basics !== 'object' || !draft.design || typeof draft.design !== 'object') return false;
+  if (typeof draft.basics.name !== 'string') return false;
+  if (!Array.isArray(draft.sectionOrder) || !Array.isArray(draft.hiddenSections)) return false;
+  return ARRAY_KEYS.every((key) => Array.isArray(draft[key]));
+}
+
 export function ResumeProvider({ children }: { children: React.ReactNode }) {
   const [data, setDataRaw] = useState<ResumeData>(SAMPLE_RESUME);
+  const [storageReady, setStorageReady] = useState(false);
 
   const urlApplied = useRef(false);
   const past = useRef<ResumeData[]>([]);
@@ -78,24 +90,40 @@ export function ResumeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (urlApplied.current) return;
     urlApplied.current = true;
-    setDataRaw((prev) => withUrlTemplate(prev));
-  }, []);
-
-  // Restore a resume parsed on /import-resume before the editor first renders.
-  useEffect(() => {
     try {
-      const pending = sessionStorage.getItem('resume-maamey-pending-import');
-      if (!pending) return;
-      const parsed = JSON.parse(pending) as ResumeData;
-      if (parsed && parsed.basics && Array.isArray(parsed.experience)) {
-        setDataRaw((prev) => ({ ...prev, ...parsed, design: { ...prev.design, ...parsed.design } }));
-        sessionStorage.removeItem('resume-maamey-pending-import');
+      const saved = window.localStorage.getItem('resume-maamey-draft-v1');
+      if (saved) {
+        const parsed: unknown = JSON.parse(saved);
+        if (isResumeDraft(parsed)) {
+          // Restore the user's resume content, but let an explicit template
+          // selected on the homepage take priority over the saved template.
+          setDataRaw((prev) => withUrlTemplate({
+            ...prev,
+            ...parsed,
+            design: { ...prev.design, ...parsed.design },
+          }));
+        } else {
+          window.localStorage.removeItem('resume-maamey-draft-v1');
+          setDataRaw((prev) => withUrlTemplate(prev));
+        }
+      } else {
+        setDataRaw((prev) => withUrlTemplate(prev));
       }
-    } catch (error) {
-      console.error('Could not restore imported resume:', error);
-      sessionStorage.removeItem('resume-maamey-pending-import');
+    } catch {
+      // Storage may be blocked or full; the editor remains usable without it.
+    } finally {
+      setStorageReady(true);
     }
   }, []);
+
+  useEffect(() => {
+    if (!storageReady) return;
+    try {
+      window.localStorage.setItem('resume-maamey-draft-v1', JSON.stringify(data));
+    } catch {
+      // Keep editing available if browser storage is unavailable or full.
+    }
+  }, [data, storageReady]);
 
   const commit = useCallback((updater: (prev: ResumeData) => ResumeData) => {
     setDataRaw((prev) => {
@@ -221,9 +249,21 @@ export function ResumeProvider({ children }: { children: React.ReactNode }) {
   const importDraft = useCallback(
     async (file: File) => {
       const text = await file.text();
-      const parsed = JSON.parse(text) as ResumeData;
-      if (!parsed || !parsed.basics) throw new Error('Not a Resume Maamey draft');
-      commit((p) => ({ ...SAMPLE_RESUME, ...parsed, design: { ...p.design, ...parsed.design } }));
+      let parsed: unknown;
+      try {
+        parsed = JSON.parse(text);
+      } catch {
+        throw new Error('This file is not valid JSON. Choose a Resume Maamey .json draft.');
+      }
+      if (!isResumeDraft(parsed)) {
+        throw new Error('This file is not a valid Resume Maamey draft. Please choose a JSON draft exported from Resume Maamey.');
+      }
+      commit((p) => ({
+        ...SAMPLE_RESUME,
+        ...parsed,
+        design: { ...p.design, ...parsed.design },
+        basics: { ...SAMPLE_RESUME.basics, ...parsed.basics },
+      }));
     },
     [commit],
   );

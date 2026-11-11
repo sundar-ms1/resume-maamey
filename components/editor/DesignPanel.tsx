@@ -2,6 +2,15 @@
 
 import React from "react";
 import { useResume } from "@/lib/store";
+import {
+  FONT_GROUPS,
+  FONT_OPTIONS,
+  findFontOption,
+  fontLabelFor,
+} from "@/lib/fonts";
+
+// Kept so any older import of FONT_OPTIONS from this file still works.
+export { FONT_OPTIONS };
 
 const PRESET_COLORS = [
   "#1d4ed8",
@@ -22,34 +31,52 @@ const PRESET_COLORS = [
   "#111827",
 ];
 
-export const FONT_OPTIONS = [
-  // --- Modern & Clean Sans-Serif (Top ATS Choices) ---
-  { label: "Inter (Standard ATS)", value: "Inter, sans-serif" },
-  { label: "Roboto", value: "Roboto, sans-serif" },
-  { label: "Open Sans", value: "'Open Sans', sans-serif" },
-  { label: "Lato", value: "Lato, sans-serif" },
-  { label: "Montserrat", value: "Montserrat, sans-serif" },
-  { label: "Poppins", value: "Poppins, sans-serif" },
-  { label: "Plus Jakarta Sans", value: "'Plus Jakarta Sans', sans-serif" },
-  { label: "DM Sans", value: "'DM Sans', sans-serif" },
-  { label: "Manrope", value: "Manrope, sans-serif" },
-  { label: "Raleway", value: "Raleway, sans-serif" },
-  { label: "Source Sans 3", value: "'Source Sans 3', sans-serif" },
-  { label: "Space Grotesk", value: "'Space Grotesk', sans-serif" },
-  { label: "Geist Sans", value: "'Geist', sans-serif" },
+const DEFAULT_FONT = "'Inter', sans-serif";
 
-  // --- Executive, Academic & Classic Serif ---
-  { label: "Merriweather", value: "Merriweather, serif" },
-  { label: "Lora", value: "Lora, serif" },
-  { label: "EB Garamond", value: "'EB Garamond', serif" },
-  { label: "PT Serif", value: "'PT Serif', serif" },
-  { label: "Cinzel", value: "Cinzel, serif" },
-  { label: "Newsreader", value: "Newsreader, serif" },
+function FontSelect({
+  value,
+  onChange,
+}: {
+  value: string | undefined;
+  onChange: (value: string) => void;
+}) {
+  const current = value || DEFAULT_FONT;
+  const match = findFontOption(current);
 
-  // --- Tech & Developer Monospace ---
-  { label: "JetBrains Mono", value: "'JetBrains Mono', monospace" },
-  { label: "Fira Code", value: "'Fira Code', monospace" },
-];
+  // A template can use a font that is not one of the 10 (for example Manrope).
+  // Show it as its own entry so the dropdown always tells the truth.
+  const extraValue = match ? null : current;
+
+  return (
+    <select
+      value={match ? match.value : current}
+      onChange={(e) => onChange(e.target.value)}
+      className="mt-1.5 w-full rounded-lg border border-line bg-white px-3 py-2 text-sm text-ink outline-none focus:border-ink"
+    >
+      {extraValue && (
+        <optgroup label="Current (from template)">
+          <option value={extraValue} style={{ fontFamily: extraValue }}>
+            {fontLabelFor(extraValue)}
+          </option>
+        </optgroup>
+      )}
+
+      {FONT_GROUPS.map((group) => (
+        <optgroup key={group} label={group}>
+          {FONT_OPTIONS.filter((font) => font.group === group).map((font) => (
+            <option
+              key={font.label}
+              value={font.value}
+              style={{ fontFamily: font.value }}
+            >
+              {font.label}
+            </option>
+          ))}
+        </optgroup>
+      ))}
+    </select>
+  );
+}
 
 export function DesignPanel() {
   const { data, updateDesign } = useResume();
@@ -98,17 +125,10 @@ export function DesignPanel() {
         <label className="text-xs font-bold uppercase tracking-wider text-ink-500">
           Heading Font
         </label>
-        <select
-          value={design.headingFont || "Inter, sans-serif"}
-          onChange={(e) => updateDesign({ headingFont: e.target.value })}
-          className="mt-1.5 w-full rounded-lg border border-line bg-white px-3 py-2 text-sm text-ink outline-none focus:border-ink"
-        >
-          {FONT_OPTIONS.map((f) => (
-            <option key={f.label} value={f.value} style={{ fontFamily: f.value }}>
-              {f.label}
-            </option>
-          ))}
-        </select>
+        <FontSelect
+          value={design.headingFont}
+          onChange={(font) => updateDesign({ headingFont: font })}
+        />
       </div>
 
       {/* BODY FONT */}
@@ -116,17 +136,10 @@ export function DesignPanel() {
         <label className="text-xs font-bold uppercase tracking-wider text-ink-500">
           Body Font
         </label>
-        <select
-          value={design.bodyFont || "Inter, sans-serif"}
-          onChange={(e) => updateDesign({ bodyFont: e.target.value })}
-          className="mt-1.5 w-full rounded-lg border border-line bg-white px-3 py-2 text-sm text-ink outline-none focus:border-ink"
-        >
-          {FONT_OPTIONS.map((f) => (
-            <option key={f.label} value={f.value} style={{ fontFamily: f.value }}>
-              {f.label}
-            </option>
-          ))}
-        </select>
+        <FontSelect
+          value={design.bodyFont}
+          onChange={(font) => updateDesign({ bodyFont: font })}
+        />
       </div>
 
       {/* TEXT SIZE (FONT SCALE) */}
